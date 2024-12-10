@@ -4,7 +4,7 @@ Projeto de Engenharia de software - Plataforma de coleta de doações para ONGs
 ## Grupo:
 - Alexander Fábio
 - Felipe Reis
-- Jair
+- Jair Antunes
 - Lucas Xavier
 
 ## Tecnologias utilizadas
