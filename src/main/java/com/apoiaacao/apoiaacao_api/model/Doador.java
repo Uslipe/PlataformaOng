@@ -1,6 +1,10 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Doador extends Usuario{
+
     private String cpf;
     //O atributo no diagrama de classe "lista de doações" não será implementado usando arraylist, mas sim com consultas personalizadas do banco
 

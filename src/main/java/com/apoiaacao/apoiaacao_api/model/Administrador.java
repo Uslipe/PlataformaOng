@@ -1,6 +1,10 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Administrador extends Usuario{
+    
     private String cpf;
 
     public String getCpf() {

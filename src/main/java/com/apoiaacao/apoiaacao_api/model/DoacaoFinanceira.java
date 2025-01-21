@@ -1,6 +1,12 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "doacao_financeira")
 public class DoacaoFinanceira extends Doacao{
+
     private double valor;
     private String formaDePagamento; //Novamente, passível de mudar para ENUM
 

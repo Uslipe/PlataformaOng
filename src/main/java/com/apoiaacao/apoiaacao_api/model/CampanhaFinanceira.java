@@ -2,7 +2,13 @@ package com.apoiaacao.apoiaacao_api.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "campanha_financeira")
 public class CampanhaFinanceira extends Campanha {
+
     private double valorObjetivo;
     private double totalArrecadado;
 

@@ -1,5 +1,10 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "usuario")
 public abstract class Usuario {
     
     private String nome;
@@ -8,12 +13,15 @@ public abstract class Usuario {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }

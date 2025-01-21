@@ -2,6 +2,11 @@ package com.apoiaacao.apoiaacao_api.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "campanha_de_itens")
 public class CampanhaDeItens extends Campanha{
     
     private String categoriaItem; //Passível de mudar para ENUM, mas teria que configurar pequenas mudanças no banco de dados

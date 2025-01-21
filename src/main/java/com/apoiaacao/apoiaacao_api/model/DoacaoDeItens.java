@@ -1,6 +1,12 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "doacao_de_itens")
 public class DoacaoDeItens extends Doacao{
+
     private int quantidadeDeItens;
     private String enderecoAgenciaDosCorreios;
     private boolean entregue;
