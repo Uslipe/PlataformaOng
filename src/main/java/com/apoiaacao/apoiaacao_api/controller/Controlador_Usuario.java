@@ -1,0 +1,23 @@
+package com.apoiaacao.apoiaacao_api.controller;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.apoiaacao.apoiaacao_api.model.Usuario;
+import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
+
+@RestController
+public class Controlador_Usuario {
+    private Repositorio_Usuario repositorio_Usuario;
+
+    public Controlador_Usuario(Repositorio_Usuario repositorio_Usuario) {
+        this.repositorio_Usuario = repositorio_Usuario;
+    }
+
+    @PostMapping("/salvarUsuario")
+    public void salvarUsuario(@RequestBody Usuario usuario) {
+        repositorio_Usuario.save(usuario);
+    }
+
+}
