@@ -1,15 +1,38 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import java.time.LocalDate;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "doacao_de_itens")
-public class DoacaoDeItens extends Doacao{
+public class DoacaoDeItens{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_doacao_itens")
+    private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_campanha_de_itens")
+    private CampanhaDeItens campanhaDeItens;
+
+    @Column(name = "qnt_itens")
     private int quantidadeDeItens;
-    private String enderecoAgenciaDosCorreios;
-    private boolean entregue;
+
+    @Column(name = "data_doacao")
+    private LocalDate dataDoacao;
 
     public int getQuantidadeDeItens() {
         return quantidadeDeItens;
@@ -19,35 +42,37 @@ public class DoacaoDeItens extends Doacao{
         this.quantidadeDeItens = quantidadeDeItens;
     }
 
-    public String getEnderecoAgenciaDosCorreios() {
-        return enderecoAgenciaDosCorreios;
+    public int getId() {
+        return id;
     }
 
-    public void setEnderecoAgenciaDosCorreios(String enderecoAgenciaDosCorreios) {
-        this.enderecoAgenciaDosCorreios = enderecoAgenciaDosCorreios;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public boolean isEntregue() {
-        return entregue;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setEntregue(boolean entregue) {
-        this.entregue = entregue;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Doador getDoador(){
-        return super.getDoador();
+    public CampanhaDeItens getCampanhaDeItens() {
+        return campanhaDeItens;
     }
 
-    public void setDoador(Doador doador){
-        super.setDoador(doador);
+    public void setCampanhaDeItens(CampanhaDeItens campanhaDeItens) {
+        this.campanhaDeItens = campanhaDeItens;
     }
 
-    public Campanha getCampanha(){
-        return super.getCampanha();
+    public LocalDate getDataDoacao() {
+        return dataDoacao;
     }
 
-    public void setCampanha(Campanha campanha){
-        super.setCampanha(campanha);
+    public void setDataDoacao(LocalDate dataDoacao) {
+        this.dataDoacao = dataDoacao;
     }
+
+    
 }
