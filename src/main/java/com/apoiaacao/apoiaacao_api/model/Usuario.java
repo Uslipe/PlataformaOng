@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuario")
-public abstract class Usuario {
+public class Usuario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  //Banco gerencia a geração do ID (serial)
