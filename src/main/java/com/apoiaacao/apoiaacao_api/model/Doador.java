@@ -1,8 +1,5 @@
 package com.apoiaacao.apoiaacao_api.model;
 
-import jakarta.persistence.Entity;
-
-@Entity
 public class Doador extends Usuario{
 
     private String cpf;

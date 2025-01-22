@@ -2,53 +2,107 @@ package com.apoiaacao.apoiaacao_api.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "campanha_financeira")
-public class CampanhaFinanceira extends Campanha {
+public class CampanhaFinanceira{
 
-    private double valorObjetivo;
-    private double totalArrecadado;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_campanha_financeira")
+    private int idCampanhaFinanceira;
 
-    public double getValorObjetivo() {
-        return valorObjetivo;
+    @ManyToOne
+    @JoinColumn(name = "id_ong")
+    private ONG idOng;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @Column(name = "descricao")
+    private String descricao;
+
+    @Column(name = "data_inicio")
+    private LocalDate dataInicio;
+
+    @Column(name = "data_fim ")
+    private LocalDate dataFim;
+
+    @Column(name = "meta_valor")
+    private double metaValor;
+
+    @Column(name = "valor_arrecadado")
+    private double valorArrecadado;
+
+    public int getIdCampanhaFinanceira() {
+        return idCampanhaFinanceira;
     }
 
-    public void setValorObjetivo(double valorObjetivo) {
-        this.valorObjetivo = valorObjetivo;
+    public void setIdCampanhaFinanceira(int idCampanhaFinanceira) {
+        this.idCampanhaFinanceira = idCampanhaFinanceira;
     }
 
-    public double getTotalArrecadado() {
-        return totalArrecadado;
+    public ONG getIdOng() {
+        return idOng;
     }
 
-    public void setTotalArrecadado(double totalArrecadado) {
-        this.totalArrecadado = totalArrecadado;
+    public void setIdOng(ONG idOng) {
+        this.idOng = idOng;
     }
 
-    public ONG getOngFundadora(){
-        return super.getOngFundadora();
-    }
-    
-    public void setOngFundadora(ONG ongFundadora){
-        super.setOngFundadora(ongFundadora);
+    public String getNome() {
+        return nome;
     }
 
-    public LocalDate getDataLimite(){
-        return super.getDataLimite();
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setDataLimite(LocalDate dataLimite){
-        super.setDataLimite(dataLimite);
+    public String getDescricao() {
+        return descricao;
     }
 
-    public boolean isEncerrada(){
-        return super.isEncerrada();
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public void setEncerrada(boolean encerrada){
-        super.setEncerrada(encerrada);
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public double getMetaValor() {
+        return metaValor;
+    }
+
+    public void setMetaValor(double metaValor) {
+        this.metaValor = metaValor;
+    }
+
+    public double getValorArrecadado() {
+        return valorArrecadado;
+    }
+
+    public void setValorArrecadado(double valorArrecadado) {
+        this.valorArrecadado = valorArrecadado;
     }
 }

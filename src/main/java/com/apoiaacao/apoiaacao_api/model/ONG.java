@@ -1,17 +1,36 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ong")
-public class ONG extends Usuario{
+public class ONG{
 
-    private String cnpj;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ong")
+    public int id;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @Column(name = "endereco")
     private String endereco;
     //O atributo lista de campanhas descrito no diagrama de classe será montado a partir do banco, sem necessidade de uma lista
+
+    @Column(name = "conta_bancaria")
     private String contaBancaria; //O atributo num da conta foi alterado para String para seguir o padrão do IBAN
+
+    @Column(name = "chave_pix")
     private String chavePix;
+
+    @Column(name = "cnpj")
+    private String cnpj;
 
     public String getCnpj() {
         return cnpj;
@@ -46,19 +65,11 @@ public class ONG extends Usuario{
     }
 
     public String getNome(){
-        return super.getNome();
+        return nome;
     }
 
     public void setNome(String nome){
-        super.setNome(nome);
-    }
-
-    public String getEmail(){
-        return super.getEmail();
-    }
-
-    public void setEmail(String email){
-        super.setNome(email);
+        this.nome = nome;
     }
     
 }
