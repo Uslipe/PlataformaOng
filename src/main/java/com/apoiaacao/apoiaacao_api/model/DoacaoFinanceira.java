@@ -22,11 +22,11 @@ public class DoacaoFinanceira{
 
     @ManyToOne
     @JoinColumn(name = "id_doador")
-    private Doador doador;
+    private Usuario doador;
 
     @ManyToOne
-    @JoinColumn(name = "id_campanha")
-    private Campanha campanha;
+    @JoinColumn(name = "id_campanha_financeira")
+    private CampanhaFinanceira campanhaFinanceira;
 
     @Column(name = "valor")
     private double valor;
@@ -53,7 +53,7 @@ public class DoacaoFinanceira{
     }
     */
 
-    public Doador getDoador() {
+    public Usuario getDoador() {
         return doador;
     }
 
@@ -61,12 +61,12 @@ public class DoacaoFinanceira{
         this.doador = doador;
     }
 
-    public Campanha getCampanha() {
-        return campanha;
+    public CampanhaFinanceira getCampanha() {
+        return campanhaFinanceira;
     }
 
-    public void setCampanha(Campanha campanha) {
-        this.campanha = campanha;
+    public void setCampanha(CampanhaFinanceira campanha) {
+        this.campanhaFinanceira = campanha;
     }
 
     public LocalDate getDataDoacao() {

@@ -22,7 +22,7 @@ public class CampanhaDeItens{
 
     @ManyToOne
     @JoinColumn(name = "id_ong")
-    private int idOng;
+    private ONG idOng;
 
     @Column(name = "nome")
     private String nome;
@@ -62,11 +62,11 @@ public class CampanhaDeItens{
         this.idCampanhaDeItens = idCampanhaDeItens;
     }
 
-    public int getIdOng() {
+    public ONG getIdOng() {
         return idOng;
     }
 
-    public void setIdOng(int idOng) {
+    public void setIdOng(ONG idOng) {
         this.idOng = idOng;
     }
 
