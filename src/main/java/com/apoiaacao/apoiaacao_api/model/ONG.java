@@ -1,5 +1,6 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,12 +13,23 @@ public class ONG{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ong")
     public int id;
+
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "endereco")
     private String endereco;
     //O atributo lista de campanhas descrito no diagrama de classe será montado a partir do banco, sem necessidade de uma lista
+
+    @Column(name = "conta_bancaria")
     private String contaBancaria; //O atributo num da conta foi alterado para String para seguir o padrão do IBAN
+
+    @Column(name = "chave_pix")
     private String chavePix;
+
+    @Column(name = "cnpj")
     private String cnpj;
 
     public String getCnpj() {
