@@ -2,9 +2,6 @@ package com.apoiaacao.apoiaacao_api.model;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-
-@Entity
 public abstract class Campanha {
 
     //O atributo "id" destacado no diagrama de classe será gerenciado pelo banco de dados de forma autoincremental
