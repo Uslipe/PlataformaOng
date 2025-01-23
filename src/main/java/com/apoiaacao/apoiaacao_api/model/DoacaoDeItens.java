@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +35,10 @@ public class DoacaoDeItens{
 
     @Column(name = "data_doacao")
     private LocalDate dataDoacao;
+
+    @Column(name = "categoria_itens")
+    @Enumerated(EnumType.STRING)
+    private CategoriaItens categoriaItens;
 
     public int getQuantidadeDeItens() {
         return quantidadeDeItens;
@@ -74,5 +80,12 @@ public class DoacaoDeItens{
         this.dataDoacao = dataDoacao;
     }
 
+    public CategoriaItens getCategoriaItens() {
+        return categoriaItens;
+    }
+
+    public void setCategoriaItens(CategoriaItens categoriaItens) {
+        this.categoriaItens = categoriaItens;
+    }
     
 }
