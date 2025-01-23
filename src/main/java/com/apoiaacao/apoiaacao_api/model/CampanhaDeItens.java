@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,6 +47,9 @@ public class CampanhaDeItens{
     @Column(name = "quantidade_itens_entregues")
     private int quantidadeDeItensEntregues;
 
+    @Column(name = "categoria_itens")
+    @Enumerated(EnumType.STRING)
+    private CategoriaItens categoriaItens;
 
     public int getQuantidadeDeItens() {
         return quantidadeDeItens;
@@ -116,6 +121,14 @@ public class CampanhaDeItens{
 
     public void setQuantidadeDeItensEntregues(int quantidadeDeItensEntregues) {
         this.quantidadeDeItensEntregues = quantidadeDeItensEntregues;
+    }
+
+    public CategoriaItens getCategoriaItens() {
+        return categoriaItens;
+    }
+
+    public void setCategoriaItens(CategoriaItens categoriaItens) {
+        this.categoriaItens = categoriaItens;
     }
     
 }
