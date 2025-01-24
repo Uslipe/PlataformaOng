@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
+import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 
 @RestController
 public class Controlador_Usuario {
@@ -17,6 +18,10 @@ public class Controlador_Usuario {
 
     @PostMapping("/salvarUsuario")
     public void salvarUsuario(@RequestBody Usuario usuario) {
+        //Encriptar a senha do usuário
+        String hashSenha = BCryptEncoder.encoder(usuario.getSenha());
+        usuario.setSenha(hashSenha);
+
         repositorio_Usuario.save(usuario);
     }
 
