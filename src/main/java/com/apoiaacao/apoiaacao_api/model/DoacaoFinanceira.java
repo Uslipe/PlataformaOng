@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,7 +35,10 @@ public class DoacaoFinanceira{
 
     @Column(name = "data_doacao")
     private LocalDate dataDoacao;
-    //private String formaDePagamento; //Novamente, passível de mudar para ENUM
+    
+    @Column(name = "forma_pagamento")
+    @Enumerated(EnumType.STRING)
+    private MetodoPagamento formaPagamento;
 
     public double getValor() {
         return valor;
@@ -42,16 +47,6 @@ public class DoacaoFinanceira{
     public void setValor(double valor) {
         this.valor = valor;
     }
-
-    /* 
-    public String getFormaDePagamento() {
-        return formaDePagamento;
-    }
-
-    public void setFormaDePagamento(String formaDePagamento) {
-        this.formaDePagamento = formaDePagamento;
-    }
-    */
 
     public Usuario getDoador() {
         return doador;
@@ -75,6 +70,14 @@ public class DoacaoFinanceira{
 
     public void setDataDoacao(LocalDate dataDoacao) {
         this.dataDoacao = dataDoacao;
+    }
+
+    public MetodoPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(MetodoPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
 }
