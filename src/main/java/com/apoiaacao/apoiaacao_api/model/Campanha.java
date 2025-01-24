@@ -6,7 +6,7 @@ public abstract class Campanha {
 
     //O atributo "id" destacado no diagrama de classe será gerenciado pelo banco de dados de forma autoincremental
     private ONG ongFundadora;
-    //Novamente, listas serão admistradas pelo banco
+    //Novamente, listas serão administradas pelo banco de dados
     private LocalDate dataLimite;
     private boolean encerrada;
 
