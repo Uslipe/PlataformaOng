@@ -1,5 +1,6 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,4 +20,15 @@ public class Controlador_DoacaoDeItens {
   public void salvarDoacaoDeItens(@RequestBody DoacaoDeItens doacaoDeItens) {
     Repositorio_DoacaoDeItens.save(doacaoDeItens);
   }
+
+  @GetMapping("/listarDoacoesDeItens")
+  public Iterable<DoacaoDeItens> listarDoacoesDeItens() {
+    return Repositorio_DoacaoDeItens.findAll();
+  }
+
+  @GetMapping("/listarDoacoesDeItensPorUsuario")
+  public Iterable<DoacaoDeItens> listarDoacoesDeItensPorUsuario(@RequestBody int idUsuario) {
+    return Repositorio_DoacaoDeItens.findByIdUsuario(idUsuario);
+  }
+
 }
