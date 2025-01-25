@@ -51,6 +51,9 @@ public class CampanhaDeItens{
     @Enumerated(EnumType.STRING)
     private CategoriaItens categoriaItens;
 
+    public CampanhaDeItens() {
+    }
+
     public int getQuantidadeDeItens() {
         return quantidadeDeItens;
     }

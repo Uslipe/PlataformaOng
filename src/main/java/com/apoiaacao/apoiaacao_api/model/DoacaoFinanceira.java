@@ -40,6 +40,9 @@ public class DoacaoFinanceira{
     @Enumerated(EnumType.STRING)
     private MetodoPagamento formaPagamento;
 
+    public DoacaoFinanceira() {
+    }
+
     public double getValor() {
         return valor;
     }

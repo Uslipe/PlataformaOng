@@ -42,6 +42,9 @@ public class CampanhaFinanceira{
     @Column(name = "valor_arrecadado")
     private double valorArrecadado;
 
+    public CampanhaFinanceira() {
+    }
+
     public int getIdCampanhaFinanceira() {
         return idCampanhaFinanceira;
     }

@@ -4,6 +4,9 @@ public class Administrador extends Usuario{
     
     private String cpf;
 
+    public Administrador() {
+    }
+
     public String getCpf() {
         return cpf;
     }

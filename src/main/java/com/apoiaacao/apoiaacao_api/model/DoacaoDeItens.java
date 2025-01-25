@@ -40,6 +40,9 @@ public class DoacaoDeItens{
     @Enumerated(EnumType.STRING)
     private CategoriaItens categoriaItens;
 
+    public DoacaoDeItens() {
+    }
+
     public int getQuantidadeDeItens() {
         return quantidadeDeItens;
     }

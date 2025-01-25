@@ -28,6 +28,9 @@ public class Usuario {
     @Column(name = "id_tipo_de_usuario")
     private int idTipoDeUsuario;
 
+    public Usuario() {
+    }
+
     public String getNome() {
         return nome;
     }

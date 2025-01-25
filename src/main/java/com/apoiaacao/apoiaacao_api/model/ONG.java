@@ -32,6 +32,9 @@ public class ONG{
     @Column(name = "cnpj")
     private String cnpj;
 
+    public ONG() {
+    }
+
     public String getCnpj() {
         return cnpj;
     }

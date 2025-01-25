@@ -10,6 +10,9 @@ public abstract class Campanha {
     private LocalDate dataLimite;
     private boolean encerrada;
 
+    public Campanha() {
+    }
+
     public ONG getOngFundadora() {
         return ongFundadora;
     }

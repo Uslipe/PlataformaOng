@@ -5,6 +5,9 @@ public abstract class Doacao {
     private Doador doador;
     private Campanha campanha;
 
+    public Doacao() {
+    }
+
     public Doador getDoador() {
         return doador;
     }
