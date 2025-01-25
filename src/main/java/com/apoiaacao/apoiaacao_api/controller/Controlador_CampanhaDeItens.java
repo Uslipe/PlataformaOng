@@ -1,5 +1,6 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,4 +25,20 @@ public class Controlador_CampanhaDeItens {
   public void deletarCampanhaDeItens(@RequestBody CampanhaDeItens campanhaDeItens) {
     Repositorio_CampanhaDeItens.delete(campanhaDeItens);
   }
+
+  @PostMapping("/atualizarCampanhaDeItens")
+  public void atualizarCampanhaDeItens(@RequestBody CampanhaDeItens campanhaDeItens) {
+    Repositorio_CampanhaDeItens.save(campanhaDeItens);
+  }
+
+  @GetMapping("/listarCampanhasDeItens")
+  public Iterable<CampanhaDeItens> listarCampanhasDeItens() {
+    return Repositorio_CampanhaDeItens.findAll();
+  }
+
+  @GetMapping("/listarCampanhasDeItensPorONG")
+  public Iterable<CampanhaDeItens> listarCampanhasDeItensPorONG(@RequestBody int idOng) {
+    return Repositorio_CampanhaDeItens.findByIdOng(idOng);
+  }
+
 }
