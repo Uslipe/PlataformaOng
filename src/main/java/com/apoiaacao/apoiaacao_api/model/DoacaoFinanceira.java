@@ -23,7 +23,7 @@ public class DoacaoFinanceira{
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id_doador")
+    @JoinColumn(name = "id_usuario")
     private Usuario doador;
 
     @ManyToOne
