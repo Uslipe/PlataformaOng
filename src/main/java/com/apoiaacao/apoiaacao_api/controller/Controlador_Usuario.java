@@ -30,6 +30,16 @@ public class Controlador_Usuario {
         repositorio_Usuario.save(usuario);
     }
 
+    @PostMapping("/login")
+    public String login(@RequestBody Usuario usuario){
+        return "Login feito com sucesso";
+    }
+
+    @GetMapping("/usuarios")
+    public List<Usuario> listarTodosUsuarios() {
+        return repositorio_Usuario.findAll();
+    }
+
     @GetMapping("/listarTodosUsuarios")
     public Iterable<Usuario> listarTodosUsuarios() {
         return repositorio_Usuario.findAll();
