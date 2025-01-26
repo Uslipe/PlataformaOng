@@ -1,5 +1,8 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,9 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apoiaacao.apoiaacao_api.model.CampanhaFinanceira;
 import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaFinanceira;
+import com.apoiaacao.apoiaacao_api.service.CampanhaFinanceiraService;
 
 @RestController
 public class Controlador_CampanhaFinanceira {
+  @Autowired
+  private CampanhaFinanceiraService campanhaFinanceiraService;
   private Repositorio_CampanhaFinanceira Repositorio_CampanhaFinanceira;
     
   public Controlador_CampanhaFinanceira(Repositorio_CampanhaFinanceira Repositorio_CampanhaFinanceira) {
@@ -18,8 +24,10 @@ public class Controlador_CampanhaFinanceira {
   }
 
   @PostMapping("/salvarCampanhaFinanceira")
-  public void salvarCampanhaFinanceira(@RequestBody CampanhaFinanceira campanhaFinanceira) {
-    Repositorio_CampanhaFinanceira.save(campanhaFinanceira);
+  public ResponseEntity<CampanhaFinanceira> salvarCampanhaFinanceira(@RequestBody CampanhaFinanceira campanhaFinanceira) {
+    int idOng = campanhaFinanceira.getIdOng().getId();
+    CampanhaFinanceira campanha = campanhaFinanceiraService.criarCampanha(idOng, campanhaFinanceira);
+    return ResponseEntity.status(HttpStatus.CREATED).body(campanha);
   }
 
   @PostMapping("/deletarCampanhaFinanceira")
