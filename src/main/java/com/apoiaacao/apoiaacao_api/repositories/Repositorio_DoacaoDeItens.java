@@ -6,4 +6,6 @@ import com.apoiaacao.apoiaacao_api.model.DoacaoDeItens;
 
 public interface Repositorio_DoacaoDeItens extends JpaRepository<DoacaoDeItens, Integer>{
 
+  Iterable<DoacaoDeItens> findByIdUsuario(int idUsuario);
+
 }

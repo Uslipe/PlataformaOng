@@ -6,4 +6,6 @@ import com.apoiaacao.apoiaacao_api.model.DoacaoFinanceira;
 
 public interface Repositorio_DoacaoFinanceira extends JpaRepository<DoacaoFinanceira, Integer>{
 
+ Iterable<DoacaoFinanceira> findByIdUsuario(int idUsuario);
+
 }
