@@ -35,6 +35,10 @@ public class ONG{
     public ONG() {
     }
 
+    public ONG(int id){
+        this.id = id;
+    }
+
     public String getCnpj() {
         return cnpj;
     }
@@ -73,6 +77,14 @@ public class ONG{
 
     public void setNome(String nome){
         this.nome = nome;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
 }
