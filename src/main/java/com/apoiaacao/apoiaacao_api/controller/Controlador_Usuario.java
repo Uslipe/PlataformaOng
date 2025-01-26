@@ -40,4 +40,10 @@ public class Controlador_Usuario {
     public List<Usuario> listarTodosUsuarios() {
         return repositorio_Usuario.findAll();
     }
+
+    @GetMapping("/listarDoadores")
+    public Iterable<Usuario> listarDoadores() {
+        return repositorio_Usuario.findByIdTipoDeUsuario(1);
+    }
+
 }
