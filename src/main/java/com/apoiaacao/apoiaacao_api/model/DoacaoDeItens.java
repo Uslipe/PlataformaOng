@@ -24,7 +24,7 @@ public class DoacaoDeItens{
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    private Usuario idUsuario;
 
     @ManyToOne
     @JoinColumn(name = "id_campanha_de_itens")
@@ -60,11 +60,11 @@ public class DoacaoDeItens{
     }
 
     public Usuario getUsuario() {
-        return usuario;
+        return idUsuario;
     }
 
     public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+        this.idUsuario = usuario;
     }
 
     public CampanhaDeItens getCampanhaDeItens() {

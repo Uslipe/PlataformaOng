@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.CampanhaFinanceira;
+import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaFinanceira;
 
 @RestController
@@ -37,7 +38,7 @@ public class Controlador_CampanhaFinanceira {
   }
 
   @GetMapping("/listarCampanhasFinanceirasPorONG")
-  public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasPorONG(@RequestBody int idOng) {
+  public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasPorONG(@RequestBody ONG idOng) {
     return Repositorio_CampanhaFinanceira.findByIdOng(idOng);
   }
   

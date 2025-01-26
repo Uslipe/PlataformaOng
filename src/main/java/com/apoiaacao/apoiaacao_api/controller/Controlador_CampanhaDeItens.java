@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.CampanhaDeItens;
+import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaDeItens;
 
 @RestController
@@ -37,7 +38,7 @@ public class Controlador_CampanhaDeItens {
   }
 
   @GetMapping("/listarCampanhasDeItensPorONG")
-  public Iterable<CampanhaDeItens> listarCampanhasDeItensPorONG(@RequestBody int idOng) {
+  public Iterable<CampanhaDeItens> listarCampanhasDeItensPorONG(@RequestBody ONG idOng) {
     return Repositorio_CampanhaDeItens.findByIdOng(idOng);
   }
 

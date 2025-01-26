@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.DoacaoDeItens;
+import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
 
 @RestController
@@ -27,7 +28,7 @@ public class Controlador_DoacaoDeItens {
   }
 
   @GetMapping("/listarDoacoesDeItensPorUsuario")
-  public Iterable<DoacaoDeItens> listarDoacoesDeItensPorUsuario(@RequestBody int idUsuario) {
+  public Iterable<DoacaoDeItens> listarDoacoesDeItensPorUsuario(@RequestBody Usuario idUsuario) {
     return Repositorio_DoacaoDeItens.findByIdUsuario(idUsuario);
   }
 

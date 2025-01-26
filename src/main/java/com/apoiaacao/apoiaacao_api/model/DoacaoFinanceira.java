@@ -24,7 +24,7 @@ public class DoacaoFinanceira{
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private Usuario doador;
+    private Usuario idUsuario;
 
     @ManyToOne
     @JoinColumn(name = "id_campanha_financeira")
@@ -52,11 +52,11 @@ public class DoacaoFinanceira{
     }
 
     public Usuario getDoador() {
-        return doador;
+        return idUsuario;
     }
 
     public void setDoador(Doador doador) {
-        this.doador = doador;
+        this.idUsuario = doador;
     }
 
     public CampanhaFinanceira getCampanha() {

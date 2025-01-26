@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.DoacaoFinanceira;
+import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoFinanceira;
 
 @RestController
@@ -27,7 +28,7 @@ public class Controlador_DoacaoFinanceira {
     }
 
     @GetMapping("/listarDoacoesFinanceirasPorUsuario")
-    public Iterable<DoacaoFinanceira> listarDoacoesFinanceirasPorUsuario(@RequestBody int idUsuario) {
+    public Iterable<DoacaoFinanceira> listarDoacoesFinanceirasPorUsuario(@RequestBody Usuario idUsuario) {
         return Repositorio_DoacaoFinanceira.findByIdUsuario(idUsuario);
     }
 }

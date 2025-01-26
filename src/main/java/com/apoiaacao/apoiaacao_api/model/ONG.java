@@ -14,7 +14,7 @@ public class ONG{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ong")
-    public int id;
+    private int id;
 
     @Column(name = "nome")
     private String nome;
