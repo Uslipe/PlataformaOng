@@ -70,6 +70,12 @@ public class Usuario {
     public void setIdTipoDeUsuario(int idTipoDeUsuario) {
         this.idTipoDeUsuario = idTipoDeUsuario;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", idTipoDeUsuario="
+                + idTipoDeUsuario + "]";
+    }
     
     
 }
