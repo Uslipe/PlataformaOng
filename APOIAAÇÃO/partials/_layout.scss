@@ -1,0 +1,348 @@
+html {
+    scroll-behavior: smooth; /* Adiciona rolagem suave */
+}
+
+.container{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 8px;
+}
+//BG HOME
+
+.bg-home{
+    position: relative;
+}
+
+.bg-home::before{
+    content: '';
+    display: block;
+    position: absolute;
+    background-image: linear-gradient(to bottom, rgba(6, 18, 30, 0.1), #06090c), url("../assets/bg.svg");
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-repeat: no-repeat ;
+    background-position: 50% 0;
+}
+
+//---------------------------------
+// HERO
+
+.hero{
+    color: $white-normal;
+    min-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+
+    h1{
+        text-align: center;
+        line-height: 150%;
+        max-width: 940px;
+        font-size: 38px;
+    }
+
+    p{
+        text-align: center;
+        margin: 14px 0;
+    }
+}
+
+.button-contact{
+    padding: 14px 28px;
+    color: $white-normal;
+    background-color: $secondary-dark;
+    border: 0;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 14px 0;
+    border-radius: 10px;
+}
+
+.button-contact:hover{
+    animation: scaleButton 0.8s alternate infinite;
+}
+
+
+@keyframes scaleButton{
+    from{
+        transform: scale(1);
+    }
+    to{
+        transform: scale(1.07);
+    }
+}
+
+@media screen and (max-width: 768px){
+    .hero{
+        min-height: 60vh;
+        
+        h1{
+           font-size: 34px;
+           padding:0 14px ;
+           width: 100%; 
+        }
+        p{
+            font-size: 14px;
+        }
+    }
+    
+}
+
+@media screen and (max-width: 480px){
+    .hero h1{
+        font-size: 24px;
+    }
+}
+
+//--------------------------------------
+
+// PROBLEM ___________
+
+.problem{
+    background-color: $secondary-dark;
+    overflow: hidden;
+    color: $white-normal;
+}
+
+.problem-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 34px 14px 64px 14px;
+
+    img{
+        max-width: 570px;
+    }
+}
+
+.problem-content div{
+    flex: 1;
+}
+
+.problem.description{
+    h2{
+        font-size: 38px;
+        margin-bottom: 24px;
+    }
+
+    p{
+        margin-bottom: 14px;
+        line-height: 150%;
+    }
+}
+
+@media screen and (max-width :768px){
+    .problem-content{
+        flex-direction: column;
+    }
+}
+
+//PUBLICO ALVO ----------------
+
+.pain{
+    background-color: $white-normal;
+    overflow: hidden;
+    color: $secondary-dark;
+}
+
+.pain-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 34px 14px 64px 14px;
+
+    img{
+        max-width: 570px;
+
+    }
+    img:hover{
+        
+            animation: translateY 0.8s infinite alternate;
+            
+        
+    }
+}
+
+.pain-content div{
+    flex: 1;
+}
+
+.pain.description{
+    h2{
+        font-size: 38px;
+        margin-bottom: 24px;
+    }
+
+    p{
+        margin-bottom: 14px;
+        line-height: 150%;
+    }
+}
+
+@media screen and (max-width :768px){
+    .pain-content{
+        flex-direction: column;
+    }
+}
+
+// call of action
+
+.action{
+    background-color: $white-normal;
+    overflow: hidden;
+    color: $secondary-dark;
+}
+
+.action-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding:150px 14px 150px 14px;
+    
+}
+
+.cta-button {
+    display: flex;
+    background-color: $secondary-dark;
+    color: $white-normal;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: 200px;
+    text-align: center;
+    justify-content: center;
+    width: 50%;
+
+}
+.cta-button:hover {
+        animation: scaleButton 0.8s alternate infinite;
+}
+
+
+
+
+
+
+
+
+//form-----------
+
+
+
+
+
+
+.form-section {
+    background-color: #fff;
+    padding: 20px;
+    //box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        
+}
+
+.form-content{
+    padding: 0px 700px;
+}
+
+input, textarea {
+    display: flex;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    //max-width: 1440px
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    //border-radius: 5px;
+}
+
+input[type="submit"] {
+    color: $white-normal;
+    background-color: $secondary-dark;
+    transition: background-color 0.8s;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+
+}
+input[type="submit"]:hover {
+    animation: scaleButton 0.8s alternate infinite;
+}
+
+// footer
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 54px 0;
+    gap: 24px;
+    color: $white-normal;
+    background-color:$secondary-dark;
+    img{
+        width: 200px;
+    }
+}
+.footer-icons{
+    display: flex;
+    gap: 8px;
+}
+
+//---------
+
+//botao whatsapp
+
+.btn-whatsapp{
+    position: fixed;
+    bottom: 14px;
+    right: 24px;
+    z-index: 99;
+
+    img{
+        max-width: 74px;
+        transition: transform 0.4s;
+    };
+
+    img:hover{
+        transform: scale(1.1);
+    }
+}
+.btn-whatsapp .tooltip-text{
+    visibility: hidden;
+    position: absolute;
+    width: 120px;
+    top: 8px;
+    left: -144px;
+    border-radius: 8px;
+    padding: 4px;
+    text-align: center;
+    background-color: $black-normal;
+    color: $white-normal;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.btn-whatsapp:hover .tooltip-text{
+    visibility: visible;
+    opacity: 1;
+}
+
+@media screen and (max-width:768px){
+    .btn-whatsapp{
+        img{
+            max-width: 64px;
+        }
+    }
+    
+}
