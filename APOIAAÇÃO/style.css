@@ -1,0 +1,389 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+header {
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+i {
+  color: #fff;
+}
+
+.header-icons {
+  display: flex;
+  gap: 14px;
+}
+
+.header-content a:hover i {
+  animation: translateY 0.8s infinite alternate;
+  color: #06090c;
+}
+
+@keyframes translateY {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(-8px) scale(1.1);
+  }
+}
+.header-button {
+  border: 1px solid #fff;
+  padding: 8px 24px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: transparent;
+  transition: background-color 0.8s;
+}
+
+.header-button:hover {
+  border: 1px solid #06090c;
+  background-color: #06090c;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  width: 25%;
+}
+
+@media screen and (max-width: 768px) {
+  .header-content {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .header-content i {
+    margin-top: 16px;
+    font-size: 34px;
+  }
+  .header-logo img {
+    width: 160px;
+    margin-top: 46px;
+  }
+  .header-button {
+    display: none;
+  }
+}
+html {
+  scroll-behavior: smooth; /* Adiciona rolagem suave */
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+.bg-home {
+  position: relative;
+}
+
+.bg-home::before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-image: linear-gradient(to bottom, rgba(6, 18, 30, 0.1), #06090c), url("../assets/bg.svg");
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+}
+
+.hero {
+  color: #fff;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+.hero h1 {
+  text-align: center;
+  line-height: 150%;
+  max-width: 940px;
+  font-size: 38px;
+}
+.hero p {
+  text-align: center;
+  margin: 14px 0;
+}
+
+.button-contact {
+  padding: 14px 28px;
+  color: #fff;
+  background-color: #06090c;
+  border: 0;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 14px 0;
+  border-radius: 10px;
+}
+
+.button-contact:hover {
+  animation: scaleButton 0.8s alternate infinite;
+}
+
+@keyframes scaleButton {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.07);
+  }
+}
+@media screen and (max-width: 768px) {
+  .hero {
+    min-height: 60vh;
+  }
+  .hero h1 {
+    font-size: 34px;
+    padding: 0 14px;
+    width: 100%;
+  }
+  .hero p {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .hero h1 {
+    font-size: 24px;
+  }
+}
+.problem {
+  background-color: #06090c;
+  overflow: hidden;
+  color: #fff;
+}
+
+.problem-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 34px 14px 64px 14px;
+}
+.problem-content img {
+  max-width: 570px;
+}
+
+.problem-content div {
+  flex: 1;
+}
+
+.problem.description h2 {
+  font-size: 38px;
+  margin-bottom: 24px;
+}
+.problem.description p {
+  margin-bottom: 14px;
+  line-height: 150%;
+}
+
+@media screen and (max-width: 768px) {
+  .problem-content {
+    flex-direction: column;
+  }
+}
+.pain {
+  background-color: #fff;
+  overflow: hidden;
+  color: #06090c;
+}
+
+.pain-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 34px 14px 64px 14px;
+}
+.pain-content img {
+  max-width: 570px;
+}
+.pain-content img:hover {
+  animation: translateY 0.8s infinite alternate;
+}
+
+.pain-content div {
+  flex: 1;
+}
+
+.pain.description h2 {
+  font-size: 38px;
+  margin-bottom: 24px;
+}
+.pain.description p {
+  margin-bottom: 14px;
+  line-height: 150%;
+}
+
+@media screen and (max-width: 768px) {
+  .pain-content {
+    flex-direction: column;
+  }
+}
+.action {
+  background-color: #fff;
+  overflow: hidden;
+  color: #06090c;
+}
+
+.action-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 150px 14px 150px 14px;
+}
+
+.cta-button {
+  display: flex;
+  background-color: #06090c;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1.2em;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-left: 200px;
+  text-align: center;
+  justify-content: center;
+  width: 50%;
+}
+
+.cta-button:hover {
+  animation: scaleButton 0.8s alternate infinite;
+}
+
+.form-section {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.form-content {
+  padding: 0px 700px;
+}
+
+input, textarea {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+}
+
+input[type=submit] {
+  color: #fff;
+  background-color: #06090c;
+  transition: background-color 0.8s;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+input[type=submit]:hover {
+  animation: scaleButton 0.8s alternate infinite;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 54px 0;
+  gap: 24px;
+  color: #fff;
+  background-color: #06090c;
+}
+.footer img {
+  width: 200px;
+}
+
+.footer-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-whatsapp {
+  position: fixed;
+  bottom: 14px;
+  right: 24px;
+  z-index: 99;
+}
+.btn-whatsapp img {
+  max-width: 74px;
+  transition: transform 0.4s;
+}
+.btn-whatsapp img:hover {
+  transform: scale(1.1);
+}
+
+.btn-whatsapp .tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  width: 120px;
+  top: 8px;
+  left: -144px;
+  border-radius: 8px;
+  padding: 4px;
+  text-align: center;
+  background-color: #232224;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.btn-whatsapp:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .btn-whatsapp img {
+    max-width: 64px;
+  }
+}
+body {
+  font-family: "sora", sans-serif;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+button {
+  font-family: "sora", sans-serif;
+  cursor: pointer;
+}
+
+svg {
+  width: 100%;
+}
+
+img {
+  width: 100%;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}/*# sourceMappingURL=style.css.map */
