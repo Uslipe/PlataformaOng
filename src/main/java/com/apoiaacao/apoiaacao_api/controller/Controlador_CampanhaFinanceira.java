@@ -17,10 +17,12 @@ import com.apoiaacao.apoiaacao_api.service.CampanhaFinanceiraService;
 public class Controlador_CampanhaFinanceira {
   @Autowired
   private CampanhaFinanceiraService campanhaFinanceiraService;
+  @Autowired
   private Repositorio_CampanhaFinanceira Repositorio_CampanhaFinanceira;
     
-  public Controlador_CampanhaFinanceira(Repositorio_CampanhaFinanceira Repositorio_CampanhaFinanceira) {
-     this.Repositorio_CampanhaFinanceira = Repositorio_CampanhaFinanceira;
+  public Controlador_CampanhaFinanceira(CampanhaFinanceiraService campanhaFinanceiraService, Repositorio_CampanhaFinanceira Repositorio_CampanhaFinanceira) {
+    this.campanhaFinanceiraService = campanhaFinanceiraService; 
+    this.Repositorio_CampanhaFinanceira = Repositorio_CampanhaFinanceira;
   }
 
   @PostMapping("/salvarCampanhaFinanceira")

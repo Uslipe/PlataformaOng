@@ -1,5 +1,6 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
 
 @RestController
 public class Controlador_DoacaoDeItens {
+  @Autowired
   private Repositorio_DoacaoDeItens Repositorio_DoacaoDeItens;
 
   public Controlador_DoacaoDeItens(Repositorio_DoacaoDeItens Repositorio_DoacaoDeItens) {

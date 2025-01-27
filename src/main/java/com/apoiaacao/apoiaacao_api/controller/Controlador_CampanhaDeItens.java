@@ -17,10 +17,11 @@ import com.apoiaacao.apoiaacao_api.service.CampanhaDeItensService;
 public class Controlador_CampanhaDeItens {
   @Autowired
   private CampanhaDeItensService campanhaDeItensService;
-
+  @Autowired
   private Repositorio_CampanhaDeItens Repositorio_CampanhaDeItens;
 
-  public Controlador_CampanhaDeItens(Repositorio_CampanhaDeItens Repositorio_CampanhaDeItens) {
+  public Controlador_CampanhaDeItens(CampanhaDeItensService CampanhaDeItensService, Repositorio_CampanhaDeItens Repositorio_CampanhaDeItens) {
+    this.campanhaDeItensService = CampanhaDeItensService;
     this.Repositorio_CampanhaDeItens = Repositorio_CampanhaDeItens;
   }
 

@@ -2,6 +2,8 @@ package com.apoiaacao.apoiaacao_api.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,12 +45,12 @@ public class DoacaoFinanceira{
     public DoacaoFinanceira() {
     }
 
-    public double getValor() {
-        return valor;
+    public int getId() {
+        return id;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Usuario getIdUsuario() {
@@ -65,6 +67,14 @@ public class DoacaoFinanceira{
 
     public void setCampanha(CampanhaFinanceira campanha) {
         this.idCampanhaFinanceira = campanha;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 
     public LocalDate getDataDoacao() {
