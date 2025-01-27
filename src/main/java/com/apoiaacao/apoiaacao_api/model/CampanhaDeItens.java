@@ -54,6 +54,10 @@ public class CampanhaDeItens{
     public CampanhaDeItens() {
     }
 
+    public CampanhaDeItens(int id) {
+        this.idCampanhaDeItens = id;
+    }
+
     public int getQuantidadeDeItens() {
         return quantidadeDeItens;
     }

@@ -26,7 +26,7 @@ public class Controlador_DoacaoFinanceira {
         this.Repositorio_DoacaoFinanceira = Repositorio_DoacaoFinanceira;
     }
 
-    @PostMapping(value = "/salvarDoacaoFinanceira", consumes = "application/json", produces = "application/json")
+    @PostMapping("/salvarDoacaoFinanceira")
     public ResponseEntity<DoacaoFinanceira> salvarDoacaoFinanceira(@RequestBody DoacaoFinanceira doacaoFinanceira) {
         int idCampanhaFinanceira = doacaoFinanceira.getCampanha().getIdCampanhaFinanceira();    
         int idUsuario = doacaoFinanceira.getIdUsuario().getId();
