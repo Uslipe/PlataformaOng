@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apoiaacao.apoiaacao_api.model.Campanha;
 import com.apoiaacao.apoiaacao_api.model.CampanhaDeItens;
 import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaDeItens;
 import com.apoiaacao.apoiaacao_api.service.CampanhaDeItensService;
-import com.apoiaacao.apoiaacao_api.service.CampanhaFinanceiraService;
 
 @RestController
 public class Controlador_CampanhaDeItens {

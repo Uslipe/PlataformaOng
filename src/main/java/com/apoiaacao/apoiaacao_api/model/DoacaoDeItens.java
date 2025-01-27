@@ -90,5 +90,15 @@ public class DoacaoDeItens{
     public void setCategoriaItens(CategoriaItens categoriaItens) {
         this.categoriaItens = categoriaItens;
     }
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    
     
 }

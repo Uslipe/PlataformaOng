@@ -45,6 +45,10 @@ public class CampanhaFinanceira{
     public CampanhaFinanceira() {
     }
 
+    public CampanhaFinanceira(int id){
+        this.idCampanhaFinanceira = id;
+    }
+
     public int getIdCampanhaFinanceira() {
         return idCampanhaFinanceira;
     }
@@ -108,4 +112,13 @@ public class CampanhaFinanceira{
     public void setValorArrecadado(double valorArrecadado) {
         this.valorArrecadado = valorArrecadado;
     }
+
+    @Override
+    public String toString() {
+        return "CampanhaFinanceira [idCampanhaFinanceira=" + idCampanhaFinanceira + ", idOng=" + idOng + ", nome="
+                + nome + ", descricao=" + descricao + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim
+                + ", metaValor=" + metaValor + ", valorArrecadado=" + valorArrecadado + "]";
+    }
+
+    
 }
