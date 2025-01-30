@@ -11,16 +11,12 @@ import org.springframework.http.ResponseEntity;
 import com.apoiaacao.apoiaacao_api.service.DoacaoDeItensService;
 import com.apoiaacao.apoiaacao_api.model.DoacaoDeItens;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
-import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
 
 @RestController
 public class Controlador_DoacaoDeItens {
   @Autowired
   private Repositorio_DoacaoDeItens Repositorio_DoacaoDeItens;
-
-  @Autowired
-  private Repositorio_Usuario Repositorio_Usuario;
 
   @Autowired
   private DoacaoDeItensService doacaoDeItensService;
@@ -34,6 +30,7 @@ public class Controlador_DoacaoDeItens {
     int idCampanha = doacaoDeItens.getCampanhaDeItens().getIdCampanhaDeItens();
     System.out.println(idCampanha);
     int idUsuario = doacaoDeItens.getUsuario().getId();
+    System.out.println(idUsuario);
     DoacaoDeItens doacao = doacaoDeItensService.criarDoacao(idCampanha, idUsuario, doacaoDeItens);
     return ResponseEntity.status(HttpStatus.CREATED).body(doacao);
   }
