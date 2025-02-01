@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
+import com.apoiaacao.apoiaacao_api.service.UsuarioService;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 
 @RestController
@@ -17,6 +18,8 @@ public class Controlador_Usuario {
     
     @Autowired
     private Repositorio_Usuario repositorio_Usuario;
+
+    @Autowired UsuarioService usuarioService;
 
     public Controlador_Usuario(Repositorio_Usuario repositorio_Usuario) {
         this.repositorio_Usuario = repositorio_Usuario;
@@ -33,7 +36,7 @@ public class Controlador_Usuario {
 
     @PostMapping("/login")
     public String login(@RequestBody Usuario usuario){
-        return "Login feito com sucesso";
+        return usuarioService.verificarUsuario(usuario);
     }
 
     @GetMapping("/usuarios")
