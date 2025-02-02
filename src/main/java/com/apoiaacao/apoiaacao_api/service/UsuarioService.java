@@ -13,15 +13,18 @@ import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 public class UsuarioService {
     @Autowired
     private Repositorio_Usuario repositorioUsuario;
+    
+    @Autowired
+    private JWTService jwtService;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
      public String verificarUsuario(Usuario usuario){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha()));
         
         if(authentication.isAuthenticated()){
-            return "Sucesso!";
+            return jwtService.gerarToken(usuario.getEmail());
         }
 
         return "Falha";
