@@ -29,6 +29,5 @@ public class MyUserDetailsService implements UserDetailsService{
         System.out.println("Usuário encontrado: " + usuario.getEmail()); // Log para verificar se o usuário foi encontrado
         return new UsuarioPrincipal(usuario);
     }
-
     
 }
