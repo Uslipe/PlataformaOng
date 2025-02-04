@@ -28,6 +28,7 @@ public class JWTFilter extends OncePerRequestFilter{//Faz com que esse filtro de
     @Autowired
     private ApplicationContext context;
 
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String cabecalhoAuth = request.getHeader("Authorization");
@@ -37,7 +38,7 @@ public class JWTFilter extends OncePerRequestFilter{//Faz com que esse filtro de
         //
         if (cabecalhoAuth != null && cabecalhoAuth.startsWith("Bearer ")) {
             token = cabecalhoAuth.substring(7); //Remove "Bearer " e pega o token
-            email = jwtService.pegarEmailDoToken(email);
+            email = jwtService.pegarEmailDoToken(token);
         }
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
