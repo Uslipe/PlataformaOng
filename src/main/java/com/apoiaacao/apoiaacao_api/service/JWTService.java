@@ -1,17 +1,19 @@
 package com.apoiaacao.apoiaacao_api.service;
 
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -49,8 +51,38 @@ public class JWTService {
     }
 
     //Gerar a chave que será usada pelo método signWith
-    private Key getKey(){
+    private SecretKey getKey(){
         byte[] keyBytes = Decoders.BASE64.decode(key);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String pegarEmailDoToken(String token) {
+        return extrairClaim(token, Claims::getSubject);
+    }
+
+    private <T> T extrairClaim(String token, Function<Claims, T> claimResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+       return Jwts.parser()
+                    .verifyWith(getKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+    }
+        
+    public boolean validarToken(String token, UserDetails userDetails) {
+        final String email = pegarEmailDoToken(token);
+        return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpirationToken(token).before(new Date());
+    }
+
+    private Date extractExpirationToken(String token) {
+        return extrairClaim(token, Claims::getExpiration);
     }
 }
