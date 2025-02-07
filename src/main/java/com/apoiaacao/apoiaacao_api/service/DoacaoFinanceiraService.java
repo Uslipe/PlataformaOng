@@ -29,10 +29,11 @@ public class DoacaoFinanceiraService {
                                .orElseThrow(() -> new RuntimeException("Campanha não encontrada"));
         System.out.println(campanha);
 
+        
         //Atribuir atributos acima a doação
         doacao.setCampanha(campanha);
         doacao.setIdUsuario(usuario);
-
+        campanha.setValorArrecadado(doacao.getValor() + campanha.getValorArrecadado());
         // Salvar a campanha financeira
         return repositorio_DoacaoFinanceira.save(doacao);
     }
