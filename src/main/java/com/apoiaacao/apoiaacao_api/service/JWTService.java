@@ -44,7 +44,7 @@ public class JWTService {
                     .add(claims)
                     .subject(email)
                     .issuedAt(new Date(System.currentTimeMillis()))
-                    .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30)) //Diz que o token é aplicável por 30 min
+                    .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) //Diz que o token é aplicável por 30 min
                     .and()
                     .signWith(getKey())
                     .compact();
