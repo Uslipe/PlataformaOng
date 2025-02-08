@@ -32,6 +32,9 @@ public class ONG{
     @Column(name = "cnpj")
     private String cnpj;
 
+    @Column(name = "validada") // Atributo usado para definir se a ONG já teve seu cadastro validado ou não
+    private boolean validada; // false = não validada e true = validada
+
     public ONG() {
     }
 
@@ -85,6 +88,14 @@ public class ONG{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean estaValidada() {
+        return validada;
+    }
+
+    public void setValidada(boolean validada) {
+        this.validada = validada;
     }
     
 }
