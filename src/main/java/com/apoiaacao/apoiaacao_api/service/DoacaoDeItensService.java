@@ -37,6 +37,7 @@ public class DoacaoDeItensService {
         //Atribuir atributos acima a doação
         doacao.setCampanhaDeItens(campanha);
         doacao.setUsuario(usuario);
+        campanha.setQuantidadeDeItens(doacao.getQuantidadeDeItens() + campanha.getQuantidadeDeItens());
 
         // Salvar a campanha financeira
         return repositorio_DoacaoDeItens.save(doacao);
