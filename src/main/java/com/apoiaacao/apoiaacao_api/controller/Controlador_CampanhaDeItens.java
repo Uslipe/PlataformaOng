@@ -52,4 +52,9 @@ public class Controlador_CampanhaDeItens {
     return Repositorio_CampanhaDeItens.findByIdOng(idOng);
   }
 
+  // @DeleteMapping("/apagarCampanhaDeItens")
+    // public void apagarCampanha(@RequestBody Usuario usuario) {
+    //     usuarioService.apagarCampanha(usuario);
+  // }
+
 }

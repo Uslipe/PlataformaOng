@@ -52,4 +52,9 @@ public class Controlador_CampanhaFinanceira {
     return Repositorio_CampanhaFinanceira.findByIdOng(idOng);
   }
   
+// @DeleteMapping("/apagarCampanhaFinanceira")
+    // public void apagarCampanha(@RequestBody Usuario usuario) {
+    //     usuarioService.apagarCampanha(usuario);
+    // }
+
 }

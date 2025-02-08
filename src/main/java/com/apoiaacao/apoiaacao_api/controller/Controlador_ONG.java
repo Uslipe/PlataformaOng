@@ -28,4 +28,9 @@ public class Controlador_ONG {
     return Repositorio_ONG.findAll();
   }
 
+  // @PutMapping("/validarOng")
+    // public void validarOng(@RequestBody Usuario usuario) {
+    //     usuarioService.validarOng(usuario);
+    // }
+
 }
