@@ -1,10 +1,15 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,14 +38,26 @@ public class Controlador_CampanhaDeItens {
     return ResponseEntity.status(HttpStatus.CREATED).body(campanha);
   }
 
-  @PostMapping("/deletarCampanhaDeItens")
+  @DeleteMapping("/deletarCampanhaDeItens")
   public void deletarCampanhaDeItens(@RequestBody CampanhaDeItens campanhaDeItens) {
     Repositorio_CampanhaDeItens.delete(campanhaDeItens);
   }
 
-  @PostMapping("/atualizarCampanhaDeItens")
-  public void atualizarCampanhaDeItens(@RequestBody CampanhaDeItens campanhaDeItens) {
-    Repositorio_CampanhaDeItens.save(campanhaDeItens);
+  @PutMapping("/editarCampanhaDeItens/{id}")
+  public ResponseEntity<CampanhaDeItens> editarCampanhaDeItens(@PathVariable int id, @RequestBody CampanhaDeItens campanhaAtualizada) {
+    Optional<CampanhaDeItens> optionalCampanha = Repositorio_CampanhaDeItens.findById(id);
+    if (optionalCampanha.isPresent()) {
+      CampanhaDeItens campanha = optionalCampanha.get();
+      campanha.setNome(campanhaAtualizada.getNome());
+      campanha.setDescricao(campanhaAtualizada.getDescricao());
+      campanha.setDataFim(campanhaAtualizada.getDataFim());
+      campanha.setEndereco(campanhaAtualizada.getEndereco());
+
+      Repositorio_CampanhaDeItens.save(campanha);
+      return ResponseEntity.ok(campanha);
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
   }
 
   @GetMapping("/listarCampanhasDeItens")
