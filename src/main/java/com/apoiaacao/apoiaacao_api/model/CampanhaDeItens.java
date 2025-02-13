@@ -51,6 +51,9 @@ public class CampanhaDeItens{
     @Enumerated(EnumType.STRING)
     private CategoriaItens categoriaItens;
 
+    @Column(name = "encerrada")
+    private boolean encerrada;
+
     public CampanhaDeItens() {
     }
 
@@ -137,5 +140,14 @@ public class CampanhaDeItens{
     public void setCategoriaItens(CategoriaItens categoriaItens) {
         this.categoriaItens = categoriaItens;
     }
+
+    public boolean getEncerrada() {
+        return encerrada;
+    }
+
+    public void setEncerrada(boolean encerrada) {
+        this.encerrada = encerrada;
+    }
+
     
 }

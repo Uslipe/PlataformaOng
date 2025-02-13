@@ -42,6 +42,9 @@ public class CampanhaFinanceira{
     @Column(name = "valor_arrecadado")
     private double valorArrecadado;
 
+    @Column(name = "encerrada")
+    private boolean encerrada;
+
     public CampanhaFinanceira() {
     }
 
@@ -111,6 +114,14 @@ public class CampanhaFinanceira{
 
     public void setValorArrecadado(double valorArrecadado) {
         this.valorArrecadado = valorArrecadado;
+    }
+
+    public boolean getEncerrada() {
+        return encerrada;
+    }
+
+    public void setEncerrada(boolean encerrada) {
+        this.encerrada = encerrada;
     }
 
     @Override
