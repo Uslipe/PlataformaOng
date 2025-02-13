@@ -41,8 +41,8 @@ public class Controlador_DoacaoDeItens {
   }
 
   @GetMapping("/listarDoacoesDeItensPorUsuario")
-  public Iterable<DoacaoDeItens> listarDoacoesDeItensPorUsuario(@RequestBody Usuario idUsuario) {
-    return Repositorio_DoacaoDeItens.findByIdUsuario(idUsuario);
+  public Iterable<DoacaoDeItens> listarDoacoesDeItensPorUsuario(@RequestBody Usuario usuario) {
+    return Repositorio_DoacaoDeItens.findByIdUsuario(usuario);
   }
 
 }

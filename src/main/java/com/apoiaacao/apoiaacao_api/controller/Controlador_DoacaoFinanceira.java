@@ -46,7 +46,7 @@ public class Controlador_DoacaoFinanceira {
     }
 
     @GetMapping("/listarDoacoesFinanceirasPorUsuario")
-    public Iterable<DoacaoFinanceira> listarDoacoesFinanceirasPorUsuario(@RequestBody Usuario idUsuario) {
-        return Repositorio_DoacaoFinanceira.findByIdUsuario(idUsuario);
+    public Iterable<DoacaoFinanceira> listarDoacoesFinanceirasPorUsuario(@RequestBody Usuario usuario) {
+        return Repositorio_DoacaoFinanceira.findByIdUsuario(usuario);
     }
 }
