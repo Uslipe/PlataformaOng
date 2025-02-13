@@ -13,4 +13,6 @@ public interface Repositorio_CampanhaFinanceira extends JpaRepository<CampanhaFi
 
   List<CampanhaFinanceira> findByIdOng(ONG idOng);
 
+  List<CampanhaFinanceira> findByEncerrada(boolean encerrada);
+
 }
