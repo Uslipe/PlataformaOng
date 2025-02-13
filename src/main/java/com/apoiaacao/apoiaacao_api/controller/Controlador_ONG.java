@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class Controlador_ONG {
     return Repositorio_ONG.findAll();
   }
 
-  @PostMapping("/validarONG")
+  @PutMapping("/validarONG")
     public ResponseEntity<ONG> validarONG(@RequestBody ONG ong) {
         ONG ongExistente = Repositorio_ONG.findById(ong.getId())
                 .orElseThrow(() -> new RuntimeException("ONG não encontrada"));
