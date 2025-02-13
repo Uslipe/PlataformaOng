@@ -57,4 +57,9 @@ public class Controlador_CampanhaFinanceira {
     //     usuarioService.apagarCampanha(usuario);
     // }
 
+  @GetMapping("/listarCampanhasFinanceirasEncerradas")
+  public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasEncerradas() {
+    return Repositorio_CampanhaFinanceira.findByEncerrada(true);
+  }
+
 }

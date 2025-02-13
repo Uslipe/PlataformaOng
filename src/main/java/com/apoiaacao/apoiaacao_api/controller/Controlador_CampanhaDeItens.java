@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.CampanhaDeItens;
 import com.apoiaacao.apoiaacao_api.model.ONG;
+import com.apoiaacao.apoiaacao_api.model.CategoriaItens;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaDeItens;
 import com.apoiaacao.apoiaacao_api.service.CampanhaDeItensService;
 
@@ -56,5 +57,15 @@ public class Controlador_CampanhaDeItens {
     // public void apagarCampanha(@RequestBody Usuario usuario) {
     //     usuarioService.apagarCampanha(usuario);
   // }
+
+  @GetMapping("/listarCampanhasDeItensEncerradas")
+  public Iterable<CampanhaDeItens> listarCampanhasDeItensEncerradas() {
+    return Repositorio_CampanhaDeItens.findByEncerrada(true);
+  }
+
+  @GetMapping("/listarCampanhasDeItensPorCategoriaItem")
+  public Iterable<CampanhaDeItens> listarCampanhasDeItensPorCategoriaItem(@RequestBody CategoriaItens categoriaItens) {
+    return Repositorio_CampanhaDeItens.findByCategoriaItens(categoriaItens);
+  }
 
 }
