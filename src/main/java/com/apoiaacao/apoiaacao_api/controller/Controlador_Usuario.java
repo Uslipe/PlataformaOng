@@ -1,10 +1,14 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,9 +55,20 @@ public class Controlador_Usuario {
         return repositorio_Usuario.findByIdTipoDeUsuario(1);
     }
 
-    // @PutMapping("/editarPerfil")
-    // public void editarPerfil(@RequestBody Usuario usuario) {
-    //     repositorio_Usuario.save(usuario);
-    // }
+    @PutMapping("/editarPerfil/{email}")
+    public ResponseEntity<Usuario> editarPerfil(@PathVariable String email, @RequestBody Usuario usuarioAtualizado) {
+        Usuario usuario = repositorio_Usuario.findByEmail(email);
+        if (usuario != null) {
+            usuario.setNome(usuarioAtualizado.getNome());
+            usuario.setEmail(usuarioAtualizado.getEmail());
+            usuario.setSenha(BCryptEncoder.encoder(usuarioAtualizado.getSenha())); // Encriptar a nova senha
+            // Atualizar outros atributos conforme necessário
+    
+            repositorio_Usuario.save(usuario); // Atualiza o usuário existente
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }
