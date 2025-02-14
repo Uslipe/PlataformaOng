@@ -47,7 +47,7 @@ public class Controlador_Usuario {
         return usuarioService.verificarUsuario(usuario);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios")
     public List<Usuario> listarTodosUsuarios() {
         return repositorio_Usuario.findAll();

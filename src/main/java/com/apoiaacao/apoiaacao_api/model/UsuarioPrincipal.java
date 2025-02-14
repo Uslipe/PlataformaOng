@@ -17,10 +17,12 @@ public class UsuarioPrincipal implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Obtendo a role do usuário a partir da tabela tipo_de_usuario
         String role = usuario.getTipoDeUsuario().getRoleTipoDeUsuario();
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role));
+        String roleWithPrefix = "ROLE_" + role;
+        System.out.println("Role atribuída ao usuário: " + roleWithPrefix);
+        return Collections.singleton(new SimpleGrantedAuthority(roleWithPrefix));
     }
+
 
     @Override
     public String getPassword() {
