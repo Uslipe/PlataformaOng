@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apoiaacao.apoiaacao_api.model.TipoDeUsuario;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 import com.apoiaacao.apoiaacao_api.service.UsuarioService;
-import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 
 @RestController
 public class Controlador_Usuario {

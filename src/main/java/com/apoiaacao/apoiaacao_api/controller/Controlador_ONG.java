@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.ONG;
+import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_ONG;
 
 @RestController
@@ -28,4 +29,10 @@ public class Controlador_ONG {
     return Repositorio_ONG.findAll();
   }
 
+  /*
+  @PostMapping("/loginOng")
+    public String login(@RequestBody ONG ong){
+        return usuarioService.verificarUsuario(ong);
+    }
+  */
 }
