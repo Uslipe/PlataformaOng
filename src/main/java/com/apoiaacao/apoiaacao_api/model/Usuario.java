@@ -1,10 +1,14 @@
 package com.apoiaacao.apoiaacao_api.model;
 
+import java.util.Optional;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,7 +16,7 @@ import jakarta.persistence.Table;
 public class Usuario {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  //Banco gerencia a geração do ID (serial)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Banco gerencia a geração do ID (serial)
     @Column(name = "id_usuario")
     private int id;
 
@@ -25,16 +29,20 @@ public class Usuario {
     @Column(name = "senha")
     private String senha;
 
-    @Column(name = "id_tipo_de_usuario")
-    private int idTipoDeUsuario;
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_de_usuario", referencedColumnName = "id_tipo_de_usuario") // Relacionamento correto
+    private TipoDeUsuario tipoDeUsuario;
 
+    // Construtor padrão
     public Usuario() {
     }
 
-    public Usuario(int id){
-        this.id =  id;
+    // Construtor com ID
+    public Usuario(int id) {
+        this.id = id;
     }
 
+    // Getters e Setters
     public String getNome() {
         return nome;
     }
@@ -67,19 +75,18 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public int getIdTipoDeUsuario() {
-        return idTipoDeUsuario;
+    public TipoDeUsuario getTipoDeUsuario() {
+        return tipoDeUsuario;
     }
 
-    public void setIdTipoDeUsuario(int idTipoDeUsuario) {
-        this.idTipoDeUsuario = idTipoDeUsuario;
+    public void setTipoDeUsuario(TipoDeUsuario tipoDeUsuario) {
+        this.tipoDeUsuario = tipoDeUsuario;
     }
 
     @Override
     public String toString() {
-        return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", idTipoDeUsuario="
-                + idTipoDeUsuario + "]";
+        return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", tipoDeUsuario="
+                + tipoDeUsuario.getIdTipoDeUsuario() + "]";
     }
-    
-    
 }
+

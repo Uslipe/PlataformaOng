@@ -32,6 +32,8 @@ public class DoacaoFinanceiraService {
         //Atribuir atributos acima a doação
         doacao.setCampanha(campanha);
         doacao.setIdUsuario(usuario);
+        campanha.setValorArrecadado(doacao.getValor() + campanha.getValorArrecadado());
+        repositorio_CampanhaFinanceira.save(campanha);
 
         // Salvar a campanha financeira
         return repositorio_DoacaoFinanceira.save(doacao);
