@@ -1,6 +1,7 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,9 +60,19 @@ public class Controlador_Usuario {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody Usuario usuario){
-        return usuarioService.verificarUsuario(usuario);
+    public ResponseEntity<String> login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String senha = loginData.get("senha");
+
+        String token = usuarioService.verificarUsuario(email, senha);
+
+        if (!"Falha".equals(token)) {
+            return ResponseEntity.ok(token);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+        }
     }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios")
