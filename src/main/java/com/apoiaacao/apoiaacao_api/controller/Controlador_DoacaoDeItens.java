@@ -1,6 +1,7 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import com.apoiaacao.apoiaacao_api.model.DoacaoDeItens;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
 
+@CrossOrigin
 @RestController
 public class Controlador_DoacaoDeItens {
   @Autowired

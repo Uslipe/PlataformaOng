@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.apoiaacao.apoiaacao_api.model.CategoriaItens;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaDeItens;
 import com.apoiaacao.apoiaacao_api.service.CampanhaDeItensService;
 
+@CrossOrigin
 @RestController
 public class Controlador_CampanhaDeItens {
   @Autowired
