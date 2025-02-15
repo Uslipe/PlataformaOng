@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,6 +36,10 @@ public class ONG{
 
     @Column(name = "validada") // Atributo usado para definir se a ONG já teve seu cadastro validado ou não
     private boolean validada; // false = não validada e true = validada
+    
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_de_usuario", referencedColumnName = "id_tipo_de_usuario") // Relacionamento correto
+    private TipoDeUsuario tipoDeUsuario;
 
     public ONG() {
     }
@@ -96,6 +102,14 @@ public class ONG{
 
     public void setValidada(boolean validada) {
         this.validada = validada;
+    }
+    
+    public TipoDeUsuario getTipoDeUsuario() {
+        return tipoDeUsuario;
+    }
+
+    public void setTipoDeUsuario(TipoDeUsuario tipoDeUsuario) {
+        this.tipoDeUsuario = tipoDeUsuario;
     }
     
 }

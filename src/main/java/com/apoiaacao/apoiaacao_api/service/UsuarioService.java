@@ -12,13 +12,19 @@ import org.springframework.stereotype.Service;
 import com.apoiaacao.apoiaacao_api.model.DoacaoDeItens;
 import com.apoiaacao.apoiaacao_api.model.DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.model.DoacaoWrapper;
+import com.apoiaacao.apoiaacao_api.model.TipoDeUsuario;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
+import com.apoiaacao.apoiaacao_api.repositories.Repositorio_TipoDeUsuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
+import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 
 @Service
 public class UsuarioService {
     @Autowired
     private Repositorio_Usuario repositorioUsuario;
+
+    @Autowired
+    private Repositorio_TipoDeUsuario repositorio_TipoDeUsuario;
     
     @Autowired
     private JWTService jwtService;
@@ -59,4 +65,17 @@ public class UsuarioService {
         return todasDoacoes;
     }
 
+    public Usuario criarUsuario(int idTipoDeUsuario, Usuario usuario) {
+        System.out.println("ID Tipo de Usuario: " + idTipoDeUsuario);
+        TipoDeUsuario tipoDeUsuario = repositorio_TipoDeUsuario.findById(idTipoDeUsuario)
+            .orElseThrow(() -> new RuntimeException("Tipo de usuário não encontrado")); // Tratamento de erro
+    
+        usuario.setTipoDeUsuario(tipoDeUsuario);
+
+        String hashSenha = BCryptEncoder.encoder(usuario.getSenha());
+        usuario.setSenha(hashSenha);
+        
+        return repositorioUsuario.save(usuario);
+    }
+    
 }

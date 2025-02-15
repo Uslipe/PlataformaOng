@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,29 +45,36 @@ public class Controlador_Usuario {
         this.repositorio_Usuario = repositorio_Usuario;
     }
 
-    @PostMapping("/registro")
-    public void salvarUsuario(@RequestBody Usuario usuario) {
-        //Encriptar a senha do usuário
-        String hashSenha = BCryptEncoder.encoder(usuario.getSenha());
-        usuario.setSenha(hashSenha);
+    @PostMapping("/salvarUsuario")
+    public ResponseEntity<Usuario> salvarUsuario(@RequestBody Usuario usuario) {
+        // Adicionando log para verificar o ID do tipo de usuário
+        System.out.println("TipoDeUsuario ID: " + usuario.getTipoDeUsuario().getIdTipoDeUsuario());
 
-        repositorio_Usuario.save(usuario);
+        int idTipoUsuario = usuario.getTipoDeUsuario().getIdTipoDeUsuario();
+        System.out.println(idTipoUsuario);
+
+        Usuario user = usuarioService.criarUsuario(idTipoUsuario, usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
+
 
     @PostMapping("/login")
     public String login(@RequestBody Usuario usuario){
         return usuarioService.verificarUsuario(usuario);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios")
     public List<Usuario> listarTodosUsuarios() {
         return repositorio_Usuario.findAll();
     }
 
+    /* 
     @GetMapping("/listarDoadores")
     public Iterable<Usuario> listarDoadores() {
         return repositorio_Usuario.findByIdTipoDeUsuario(1);
     }
+        */
 
     @PutMapping("/editarPerfil/{email}")
     public ResponseEntity<Usuario> editarPerfil(@PathVariable String email, @RequestBody Usuario usuarioAtualizado) {
