@@ -1,10 +1,16 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +19,7 @@ import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaFinanceira;
 import com.apoiaacao.apoiaacao_api.service.CampanhaFinanceiraService;
 
+@CrossOrigin
 @RestController
 public class Controlador_CampanhaFinanceira {
   @Autowired
@@ -32,14 +39,27 @@ public class Controlador_CampanhaFinanceira {
     return ResponseEntity.status(HttpStatus.CREATED).body(campanha);
   }
 
-  @PostMapping("/deletarCampanhaFinanceira")
+  @DeleteMapping("/deletarCampanhaFinanceira")
   public void deletarCampanhaFinanceira(@RequestBody CampanhaFinanceira campanhaFinanceira) {
     Repositorio_CampanhaFinanceira.delete(campanhaFinanceira);
   }
   
-  @PostMapping("/atualizarCampanhaFinanceira")
-  public void atualizarCampanhaFinanceira(@RequestBody CampanhaFinanceira campanhaFinanceira) {
-    Repositorio_CampanhaFinanceira.save(campanhaFinanceira);
+ @PutMapping("/editarCampanhaFinanceira/{id}")
+  public ResponseEntity<CampanhaFinanceira> editarCampanhaFinanceira(@PathVariable int id, @RequestBody CampanhaFinanceira campanhaAtualizada) {
+    Optional<CampanhaFinanceira> optionalCampanha = Repositorio_CampanhaFinanceira.findById(id);
+    if (optionalCampanha.isPresent()) {
+      CampanhaFinanceira campanha = optionalCampanha.get();
+      campanha.setNome(campanhaAtualizada.getNome());
+      campanha.setDescricao(campanhaAtualizada.getDescricao());
+      campanha.setDataFim(campanhaAtualizada.getDataFim());
+      campanha.setMetaValor(campanhaAtualizada.getMetaValor());
+      // Atualizar outros atributos conforme necessário
+
+      Repositorio_CampanhaFinanceira.save(campanha); // Atualiza a campanha existente
+      return ResponseEntity.ok(campanha);
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
   }
 
   @GetMapping("/listarCampanhasFinanceiras")
@@ -52,4 +72,14 @@ public class Controlador_CampanhaFinanceira {
     return Repositorio_CampanhaFinanceira.findByIdOng(idOng);
   }
   
+// @DeleteMapping("/apagarCampanhaFinanceira")
+    // public void apagarCampanha(@RequestBody Usuario usuario) {
+    //     usuarioService.apagarCampanha(usuario);
+    // }
+
+  @GetMapping("/listarCampanhasFinanceirasEncerradas")
+  public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasEncerradas() {
+    return Repositorio_CampanhaFinanceira.findByEncerrada(true);
+  }
+
 }

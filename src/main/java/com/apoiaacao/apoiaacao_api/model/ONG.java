@@ -34,6 +34,9 @@ public class ONG{
     @Column(name = "cnpj")
     private String cnpj;
 
+    @Column(name = "validada") // Atributo usado para definir se a ONG já teve seu cadastro validado ou não
+    private boolean validada; // false = não validada e true = validada
+    
     @ManyToOne
     @JoinColumn(name = "id_tipo_de_usuario", referencedColumnName = "id_tipo_de_usuario") // Relacionamento correto
     private TipoDeUsuario tipoDeUsuario;
@@ -93,6 +96,14 @@ public class ONG{
         this.id = id;
     }
 
+    public boolean estaValidada() {
+        return validada;
+    }
+
+    public void setValidada(boolean validada) {
+        this.validada = validada;
+    }
+    
     public TipoDeUsuario getTipoDeUsuario() {
         return tipoDeUsuario;
     }
