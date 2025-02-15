@@ -1,10 +1,13 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,9 +48,22 @@ public class Controlador_ONG {
         return ResponseEntity.ok(ongExistente);
     }
 
-  // @PutMapping("/validarOng")
-    // public void validarOng(@RequestBody Usuario usuario) {
-    //     usuarioService.validarOng(usuario);
-    // }
+@PutMapping("/atualizarONG/{cnpj}")
+    public ResponseEntity<ONG> atualizarONG(@PathVariable String cnpj, @RequestBody ONG ongAtualizada) {
+        Optional<ONG> optionalOng = Repositorio_ONG.findByCnpj(cnpj);
+        if (optionalOng.isPresent()) {
+            ONG ongExistente = optionalOng.get();
+            ongExistente.setNome(ongAtualizada.getNome());
+            ongExistente.setEndereco(ongAtualizada.getEndereco());
+            ongExistente.setContaBancaria(ongAtualizada.getContaBancaria());
+            ongExistente.setChavePix(ongAtualizada.getChavePix());
+
+            Repositorio_ONG.save(ongExistente);
+            
+            return ResponseEntity.ok(ongExistente);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }
