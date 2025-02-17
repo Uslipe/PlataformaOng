@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_ONG;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class Controlador_ONG {
 

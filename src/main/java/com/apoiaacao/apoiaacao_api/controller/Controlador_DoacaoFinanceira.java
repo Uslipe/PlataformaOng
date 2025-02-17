@@ -3,6 +3,7 @@ package com.apoiaacao.apoiaacao_api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.service.DoacaoFinanceiraService;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class Controlador_DoacaoFinanceira {
     @Autowired
@@ -28,11 +29,11 @@ public class Controlador_DoacaoFinanceira {
         this.Repositorio_DoacaoFinanceira = Repositorio_DoacaoFinanceira;
     }
 
+    @PreAuthorize("hasRole('DOADOR')")
     @PostMapping("/salvarDoacaoFinanceira")
     public ResponseEntity<DoacaoFinanceira> salvarDoacaoFinanceira(@RequestBody DoacaoFinanceira doacaoFinanceira) {
         int idCampanhaFinanceira = doacaoFinanceira.getCampanha().getIdCampanhaFinanceira();    
         int idUsuario = doacaoFinanceira.getIdUsuario().getId();
-        System.out.println(idCampanhaFinanceira);
         DoacaoFinanceira doacao = doacaoFinanceiraService.criarDoacao(idCampanhaFinanceira, idUsuario, doacaoFinanceira);
         return ResponseEntity.status(HttpStatus.CREATED).body(doacao);
     }
