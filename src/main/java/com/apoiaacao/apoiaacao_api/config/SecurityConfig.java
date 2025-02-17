@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -35,6 +36,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                     .csrf(customizer -> customizer.disable()) //Desativamos o csrf pois isso é uma api, e os clientes enviam tokens de autenticação (JWT)
+                    .cors(withDefaults())
                     .authorizeHttpRequests(request -> request
                                                             .requestMatchers("/salvarUsuario", "/login", "/listarCampanhasFinanceiras", "/listarCampanhasDeItens").permitAll().anyRequest().authenticated())//Todas as requisições de HTTP precisam ser autenticadas, no nosso caso, com httpBasic
                     .httpBasic(Customizer.withDefaults()) //Aplica as configurações mais básicas de autenticação (no nosso caso, presente no application.properties)
