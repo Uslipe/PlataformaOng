@@ -36,13 +36,13 @@ public class JWTService {
 
     }
 
-    public String gerarToken(String email){
+    public String gerarToken(String subjetc){
         Map<String, Object> claims = new HashMap<>();
 
         return Jwts.builder()
                     .claims()
                     .add(claims)
-                    .subject(email)
+                    .subject(subjetc)
                     .issuedAt(new Date(System.currentTimeMillis()))
                     .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) //Diz que o token é aplicável por 30 min
                     .and()
@@ -56,7 +56,7 @@ public class JWTService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String pegarEmailDoToken(String token) {
+    public String pegarSubjectDoToken(String token) {
         return extrairClaim(token, Claims::getSubject);
     }
 
@@ -74,7 +74,7 @@ public class JWTService {
     }
         
     public boolean validarToken(String token, UserDetails userDetails) {
-        final String email = pegarEmailDoToken(token);
+        final String email = pegarSubjectDoToken(token);
         return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 

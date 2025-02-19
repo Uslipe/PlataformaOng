@@ -38,7 +38,7 @@ public class JWTFilter extends OncePerRequestFilter{//Faz com que esse filtro de
         //
         if (cabecalhoAuth != null && cabecalhoAuth.startsWith("Bearer ")) {
             token = cabecalhoAuth.substring(7); //Remove "Bearer " e pega o token
-            email = jwtService.pegarEmailDoToken(token);
+            email = jwtService.pegarSubjectDoToken(token);
         }
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
