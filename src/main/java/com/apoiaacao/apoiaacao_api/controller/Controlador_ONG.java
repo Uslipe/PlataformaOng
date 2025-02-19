@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.ONG;
-import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_ONG;
+import com.apoiaacao.apoiaacao_api.service.ONGService;
+import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 
 @CrossOrigin
 @RestController
@@ -23,6 +24,9 @@ public class Controlador_ONG {
 
   @Autowired
   private Repositorio_ONG Repositorio_ONG;
+
+  @Autowired
+  private ONGService ongService;
   
   public Controlador_ONG(Repositorio_ONG Repositorio_ONG) {
     this.Repositorio_ONG = Repositorio_ONG;
@@ -31,9 +35,16 @@ public class Controlador_ONG {
   @PostMapping("/salvarONG")
   public ResponseEntity<ONG> salvarONG(@RequestBody ONG ong) {
     ong.setValidada(false); // Define a ONG como não validada inicialmente
+    String hashSenha = BCryptEncoder.encoder(ong.getSenha());
+    ong.setSenha(hashSenha);
     ONG savedOng = Repositorio_ONG.save(ong);
     return ResponseEntity.status(HttpStatus.CREATED).body(savedOng);
   }
+
+  @PostMapping("/loginOng")
+    public String login(@RequestBody ONG ong){
+        return ongService.verificarOng(ong);
+    }
 
   @GetMapping("/listarONG")
   public Iterable<ONG> listarONG() {
