@@ -23,6 +23,7 @@ import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
+import com.apoiaacao.apoiaacao_api.service.EmailService;
 import com.apoiaacao.apoiaacao_api.service.UsuarioService;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 import com.apoiaacao.apoiaacao_api.dto.LoginResponse;
@@ -43,6 +44,9 @@ public class Controlador_Usuario {
     @Autowired
     private Repositorio_DoacaoDeItens repositorio_DoacaoDeItens;
 
+    @Autowired
+    private EmailService emailService;
+
     public Controlador_Usuario(Repositorio_Usuario repositorio_Usuario) {
         this.repositorio_Usuario = repositorio_Usuario;
     }
@@ -56,6 +60,11 @@ public class Controlador_Usuario {
         System.out.println(idTipoUsuario);
 
         Usuario user = usuarioService.criarUsuario(idTipoUsuario, usuario);
+        try {
+            emailService.sendEmail(user.getEmail(), "ApoiaAção - Confirmação de Cadastro", "Seu cadastro foi realizado com sucesso!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
