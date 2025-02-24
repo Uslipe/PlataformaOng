@@ -19,7 +19,7 @@ import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaFinanceira;
 import com.apoiaacao.apoiaacao_api.service.CampanhaFinanceiraService;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class Controlador_CampanhaFinanceira {
   @Autowired

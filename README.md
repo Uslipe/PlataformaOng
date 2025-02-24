@@ -11,7 +11,7 @@ Projeto de Engenharia de software - Plataforma de coleta de doações para ONGs
 ###
 
 <div align="left">
-  <img src="https://devicons.railway.com/i/railway-dark.svg" height="40" alt="railway logo" />
+  <img src="https://devicons.railway.com/i/railway-light.svg" height="40" alt="railway logo" />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="40" alt="java logo"  />
   <img width="12" />

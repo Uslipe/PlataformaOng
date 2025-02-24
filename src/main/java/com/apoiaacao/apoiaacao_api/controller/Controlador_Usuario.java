@@ -1,6 +1,7 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,9 @@ import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
 import com.apoiaacao.apoiaacao_api.service.UsuarioService;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
+import com.apoiaacao.apoiaacao_api.dto.LoginResponse;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class Controlador_Usuario {
     
@@ -59,8 +61,19 @@ public class Controlador_Usuario {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody Usuario usuario){
-        return usuarioService.verificarUsuario(usuario);
+    public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String senha = loginData.get("senha");
+
+        String token = usuarioService.verificarUsuario(email, senha);
+        int idUsuario = repositorio_Usuario.findByEmail(email).getId();
+
+        if (!"Falha".equals(token)) {
+            LoginResponse resposta = new LoginResponse(token, idUsuario);
+            return ResponseEntity.ok(resposta);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")

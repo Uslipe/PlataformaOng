@@ -24,7 +24,7 @@ public class DoacaoFinanceiraService {
     public DoacaoFinanceira criarDoacao(int idCampanhaFinanceira, int idUsuario, DoacaoFinanceira doacao) {
         //Buscar usuário e campanha pelo id
         Usuario usuario = repositorio_Usuario.findById(idUsuario)
-                               .orElseThrow(() -> new RuntimeException("Usuario não encontrada"));
+                               .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
         CampanhaFinanceira campanha = repositorio_CampanhaFinanceira.findById(idCampanhaFinanceira)
                                .orElseThrow(() -> new RuntimeException("Campanha não encontrada"));
         System.out.println(campanha);
@@ -33,10 +33,11 @@ public class DoacaoFinanceiraService {
         //Atribuir atributos acima a doação
         doacao.setCampanha(campanha);
         doacao.setIdUsuario(usuario);
+        doacao.setDataDoacao(java.time.LocalDate.now());
         campanha.setValorArrecadado(doacao.getValor() + campanha.getValorArrecadado());
         // repositorio_CampanhaFinanceira.save(campanha);
 
-        // Salvar a campanha financeira
+        // Salva a doação financeira
         return repositorio_DoacaoFinanceira.save(doacao);
     }
 }
