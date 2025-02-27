@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.apoiaacao.apoiaacao_api.model.CampanhaFinanceira;
 import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaFinanceira;
 import com.apoiaacao.apoiaacao_api.service.CampanhaFinanceiraService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @CrossOrigin
 @RestController
@@ -32,11 +37,21 @@ public class Controlador_CampanhaFinanceira {
     this.Repositorio_CampanhaFinanceira = Repositorio_CampanhaFinanceira;
   }
 
-  @PostMapping("/salvarCampanhaFinanceira")
-  public ResponseEntity<CampanhaFinanceira> salvarCampanhaFinanceira(@RequestBody CampanhaFinanceira campanhaFinanceira) {
-    int idOng = campanhaFinanceira.getIdOng().getId();
-    CampanhaFinanceira campanha = campanhaFinanceiraService.criarCampanha(idOng, campanhaFinanceira);
-    return ResponseEntity.status(HttpStatus.CREATED).body(campanha);
+  @PostMapping("/salvarCampanhaFinanceira")                                                                               //Diz que a imagem não é obrigatória
+  public ResponseEntity<?> salvarCampanhaFinanceira(@RequestPart("campanhaFinanceira") String campanhaFinanceira, @RequestPart(value = "imagem",required = false) MultipartFile imagem) {
+    
+    try {
+      ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);;
+
+      CampanhaFinanceira campanhaFinanceira2 = objectMapper.readValue(campanhaFinanceira, CampanhaFinanceira.class);
+      int idOng = campanhaFinanceira2.getIdOng().getId();
+      CampanhaFinanceira campanha = campanhaFinanceiraService.criarCampanha(idOng, campanhaFinanceira, imagem);
+      return ResponseEntity.status(HttpStatus.CREATED).body(campanha);
+    } 
+    catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());  
+    }
+    
   }
 
   @DeleteMapping("/deletarCampanhaFinanceira")
