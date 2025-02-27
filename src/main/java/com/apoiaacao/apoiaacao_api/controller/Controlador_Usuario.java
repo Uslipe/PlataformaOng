@@ -2,6 +2,7 @@ package com.apoiaacao.apoiaacao_api.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -97,16 +98,28 @@ public class Controlador_Usuario {
         return repositorio_Usuario.findByIdTipoDeUsuario(1);
     }
         */
+    
+    @GetMapping("/buscarUsuario/{id}")
+    public ResponseEntity<Usuario> buscarUsuario(@PathVariable int id) {
+        Optional<Usuario> optionalUsuario = repositorio_Usuario.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
-    @PutMapping("/editarPerfil/{email}")
-    public ResponseEntity<Usuario> editarPerfil(@PathVariable String email, @RequestBody Usuario usuarioAtualizado) {
-        Usuario usuario = repositorio_Usuario.findByEmail(email);
-        if (usuario != null) {
+    @PutMapping("/editarPerfil/{id}")
+    public ResponseEntity<Usuario> editarPerfil(@PathVariable int id, @RequestBody Usuario usuarioAtualizado) {
+        Optional<Usuario> optionalUsuario = repositorio_Usuario.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
             usuario.setNome(usuarioAtualizado.getNome());
             usuario.setEmail(usuarioAtualizado.getEmail());
-            usuario.setSenha(BCryptEncoder.encoder(usuarioAtualizado.getSenha())); // Encriptar a nova senha
-            // Atualizar outros atributos conforme necessário
-    
+            if (usuarioAtualizado.getSenha() != null) {
+                usuario.setSenha(BCryptEncoder.encoder(usuarioAtualizado.getSenha())); // Encriptar a nova senha
+            }
             repositorio_Usuario.save(usuario); // Atualiza o usuário existente
             return ResponseEntity.ok(usuario);
         } else {
@@ -114,16 +127,24 @@ public class Controlador_Usuario {
         }
     }
 
-    @DeleteMapping("/deletarUsuario/{email}")
-    public ResponseEntity<Usuario> deletarUsuario(@PathVariable String email) {
-        Usuario usuario = usuarioService.buscarUsuarioPorEmail(email);
-        if (usuario != null) {
+    
+    @DeleteMapping("/deletarUsuario/{id}")
+    public ResponseEntity<Usuario> deletarUsuario(@PathVariable int id) {
+        Optional<Usuario> optionalUsuario = repositorio_Usuario.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
             repositorio_Usuario.delete(usuario);
+            try {
+                emailService.sendEmail(usuario.getEmail(), "ApoiaAção - Conta Excluída", "Sua conta dentro da plataforma ApoiaAção foi excluída.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return ResponseEntity.ok(usuario);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
 
     @GetMapping("/verHistoricoDoacoes/{email}")
     public ResponseEntity<List<DoacaoWrapper>> verHistoricoDoacoes(@PathVariable String email) {
