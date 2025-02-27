@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -44,6 +45,16 @@ public class CampanhaFinanceira{
 
     @Column(name = "encerrada")
     private boolean encerrada;
+
+    @Column(name = "nome_imagem")
+    private String nomeDaImagem;
+
+    @Column(name = "tipo_imagem")
+    private String tipoDaImagem;
+
+    @Lob
+    @Column(name = "dados_imagem")
+    private byte[] dadosDaImagem;
 
     public CampanhaFinanceira() {
     }
@@ -122,6 +133,30 @@ public class CampanhaFinanceira{
 
     public void setEncerrada(boolean encerrada) {
         this.encerrada = encerrada;
+    }
+
+    public String getNomeDaImagem() {
+        return nomeDaImagem;
+    }
+
+    public void setNomeDaImagem(String nomeDaImagem) {
+        this.nomeDaImagem = nomeDaImagem;
+    }
+
+    public String getTipoDaImagem() {
+        return tipoDaImagem;
+    }
+
+    public void setTipoDaImagem(String tipoDaImagem) {
+        this.tipoDaImagem = tipoDaImagem;
+    }
+
+    public byte[] getDadosDaImagem() {
+        return dadosDaImagem;
+    }
+
+    public void setDadosDaImagem(byte[] dadosDaImagem) {
+        this.dadosDaImagem = dadosDaImagem;
     }
 
     @Override
