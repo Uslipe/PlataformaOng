@@ -3,6 +3,8 @@ package com.apoiaacao.apoiaacao_api.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -96,5 +98,33 @@ public class Controlador_CampanhaFinanceira {
   public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasEncerradas() {
     return Repositorio_CampanhaFinanceira.findByEncerrada(true);
   }
+
+  @GetMapping("/imagemCampanha/{idCampanhaFinanceira}")
+public ResponseEntity<ByteArrayResource> getImagemCampanha(@PathVariable int idCampanhaFinanceira) {
+    Optional<CampanhaFinanceira> campanhaOptional = Repositorio_CampanhaFinanceira.findById(idCampanhaFinanceira);
+    
+    if (campanhaOptional.isPresent()) {
+        CampanhaFinanceira campanha = campanhaOptional.get();
+        
+        // Recupera os dados binários da imagem e o tipo da imagem
+        byte[] dadosImagem = campanha.getDadosDaImagem();
+        String tipoImagem = campanha.getTipoDaImagem();
+        
+        if (dadosImagem != null && tipoImagem != null) {
+            // Converte os dados binários para um recurso
+            ByteArrayResource resource = new ByteArrayResource(dadosImagem);
+
+            // Retorna a imagem com o tipo correto
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, tipoImagem)  // Define o tipo de conteúdo da imagem
+                    .body(resource);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Caso a imagem não exista
+        }
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // Campanha não encontrada
+    }
+}
+
 
 }
