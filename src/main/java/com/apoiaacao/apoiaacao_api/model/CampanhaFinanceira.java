@@ -2,6 +2,10 @@ package com.apoiaacao.apoiaacao_api.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,10 +34,14 @@ public class CampanhaFinanceira{
     @Column(name = "descricao")
     private String descricao;
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "data_inicio")
     private LocalDate dataInicio;
 
-    @Column(name = "data_fim ")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Column(name = "data_fim")
     private LocalDate dataFim;
 
     @Column(name = "meta_valor")
@@ -44,6 +52,16 @@ public class CampanhaFinanceira{
 
     @Column(name = "encerrada")
     private boolean encerrada;
+
+    @Column(name = "nome_imagem")
+    private String nomeDaImagem;
+
+    @Column(name = "tipo_imagem")
+    private String tipoDaImagem;
+
+    
+    @Column(name = "dados_imagem", columnDefinition = "BYTEA")
+    private byte[] dadosDaImagem;
 
     public CampanhaFinanceira() {
     }
@@ -122,6 +140,30 @@ public class CampanhaFinanceira{
 
     public void setEncerrada(boolean encerrada) {
         this.encerrada = encerrada;
+    }
+
+    public String getNomeDaImagem() {
+        return nomeDaImagem;
+    }
+
+    public void setNomeDaImagem(String nomeDaImagem) {
+        this.nomeDaImagem = nomeDaImagem;
+    }
+
+    public String getTipoDaImagem() {
+        return tipoDaImagem;
+    }
+
+    public void setTipoDaImagem(String tipoDaImagem) {
+        this.tipoDaImagem = tipoDaImagem;
+    }
+
+    public byte[] getDadosDaImagem() {
+        return dadosDaImagem;
+    }
+
+    public void setDadosDaImagem(byte[] dadosDaImagem) {
+        this.dadosDaImagem = dadosDaImagem;
     }
 
     @Override
