@@ -18,7 +18,7 @@ import com.apoiaacao.apoiaacao_api.repositories.Repositorio_ONG;
 import com.apoiaacao.apoiaacao_api.service.ONGService;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class Controlador_ONG {
 

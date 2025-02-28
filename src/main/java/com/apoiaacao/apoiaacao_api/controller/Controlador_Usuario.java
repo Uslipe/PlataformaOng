@@ -1,6 +1,8 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +24,12 @@ import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
+import com.apoiaacao.apoiaacao_api.service.EmailService;
 import com.apoiaacao.apoiaacao_api.service.UsuarioService;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
+import com.apoiaacao.apoiaacao_api.dto.LoginResponse;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class Controlador_Usuario {
     
@@ -41,6 +45,9 @@ public class Controlador_Usuario {
     @Autowired
     private Repositorio_DoacaoDeItens repositorio_DoacaoDeItens;
 
+    @Autowired
+    private EmailService emailService;
+
     public Controlador_Usuario(Repositorio_Usuario repositorio_Usuario) {
         this.repositorio_Usuario = repositorio_Usuario;
     }
@@ -54,13 +61,29 @@ public class Controlador_Usuario {
         System.out.println(idTipoUsuario);
 
         Usuario user = usuarioService.criarUsuario(idTipoUsuario, usuario);
+        try {
+            emailService.sendEmail(user.getEmail(), "ApoiaAção - Confirmação de Cadastro", "Seu cadastro foi realizado com sucesso!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
 
     @PostMapping("/login")
-    public String login(@RequestBody Usuario usuario){
-        return usuarioService.verificarUsuario(usuario);
+    public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String senha = loginData.get("senha");
+
+        String token = usuarioService.verificarUsuario(email, senha);
+        int idUsuario = repositorio_Usuario.findByEmail(email).getId();
+
+        if (!"Falha".equals(token)) {
+            LoginResponse resposta = new LoginResponse(token, idUsuario);
+            return ResponseEntity.ok(resposta);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -75,16 +98,28 @@ public class Controlador_Usuario {
         return repositorio_Usuario.findByIdTipoDeUsuario(1);
     }
         */
+    
+    @GetMapping("/buscarUsuario/{id}")
+    public ResponseEntity<Usuario> buscarUsuario(@PathVariable int id) {
+        Optional<Usuario> optionalUsuario = repositorio_Usuario.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
-    @PutMapping("/editarPerfil/{email}")
-    public ResponseEntity<Usuario> editarPerfil(@PathVariable String email, @RequestBody Usuario usuarioAtualizado) {
-        Usuario usuario = repositorio_Usuario.findByEmail(email);
-        if (usuario != null) {
+    @PutMapping("/editarPerfil/{id}")
+    public ResponseEntity<Usuario> editarPerfil(@PathVariable int id, @RequestBody Usuario usuarioAtualizado) {
+        Optional<Usuario> optionalUsuario = repositorio_Usuario.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
             usuario.setNome(usuarioAtualizado.getNome());
             usuario.setEmail(usuarioAtualizado.getEmail());
-            usuario.setSenha(BCryptEncoder.encoder(usuarioAtualizado.getSenha())); // Encriptar a nova senha
-            // Atualizar outros atributos conforme necessário
-    
+            if (usuarioAtualizado.getSenha() != null) {
+                usuario.setSenha(BCryptEncoder.encoder(usuarioAtualizado.getSenha())); // Encriptar a nova senha
+            }
             repositorio_Usuario.save(usuario); // Atualiza o usuário existente
             return ResponseEntity.ok(usuario);
         } else {
@@ -92,16 +127,24 @@ public class Controlador_Usuario {
         }
     }
 
-    @DeleteMapping("/deletarUsuario/{email}")
-    public ResponseEntity<Usuario> deletarUsuario(@PathVariable String email) {
-        Usuario usuario = usuarioService.buscarUsuarioPorEmail(email);
-        if (usuario != null) {
+    
+    @DeleteMapping("/deletarUsuario/{id}")
+    public ResponseEntity<Usuario> deletarUsuario(@PathVariable int id) {
+        Optional<Usuario> optionalUsuario = repositorio_Usuario.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
             repositorio_Usuario.delete(usuario);
+            try {
+                emailService.sendEmail(usuario.getEmail(), "ApoiaAção - Conta Excluída", "Sua conta dentro da plataforma ApoiaAção foi excluída.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return ResponseEntity.ok(usuario);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
 
     @GetMapping("/verHistoricoDoacoes/{email}")
     public ResponseEntity<List<DoacaoWrapper>> verHistoricoDoacoes(@PathVariable String email) {

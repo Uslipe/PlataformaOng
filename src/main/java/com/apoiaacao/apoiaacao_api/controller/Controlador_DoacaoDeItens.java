@@ -14,7 +14,7 @@ import com.apoiaacao.apoiaacao_api.model.DoacaoDeItens;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class Controlador_DoacaoDeItens {
   @Autowired

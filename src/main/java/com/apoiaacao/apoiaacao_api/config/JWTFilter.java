@@ -32,13 +32,18 @@ public class JWTFilter extends OncePerRequestFilter{//Faz com que esse filtro de
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String cabecalhoAuth = request.getHeader("Authorization");
+        System.out.println("Cabeçalho: " + cabecalhoAuth);
         String token = null;
         String email = null;
 
         //
         if (cabecalhoAuth != null && cabecalhoAuth.startsWith("Bearer ")) {
             token = cabecalhoAuth.substring(7); //Remove "Bearer " e pega o token
+
+            System.out.println("Token extraído: " + token);
             email = jwtService.pegarSubjectDoToken(token);
+            System.out.println("Email extraído: " + email);
+
         }
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
@@ -48,12 +53,12 @@ public class JWTFilter extends OncePerRequestFilter{//Faz com que esse filtro de
             if(jwtService.validarToken(token, userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken); 
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+                System.out.println("Token autenticado com sucesso"); 
+            } else {
+                System.out.println("Falha na validação do token"); // Log da falha na validação do token
             }
-
         }
         filterChain.doFilter(request, response);
-        
-    }  
-    
+    }   
 }

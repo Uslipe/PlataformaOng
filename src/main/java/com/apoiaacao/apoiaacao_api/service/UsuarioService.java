@@ -32,15 +32,18 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-     public String verificarUsuario(Usuario usuario){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha()));
-        
-        if(authentication.isAuthenticated()){
-            return jwtService.gerarToken(usuario.getEmail());
+    public String verificarUsuario(String email, String senha) {
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(email, senha)
+        );
+    
+        if (authentication.isAuthenticated()) {
+            return jwtService.gerarToken(email);
         }
-
+    
         return "Falha";
     }
+    
 
     public Usuario buscarUsuarioPorEmail(String email){
         return repositorioUsuario.findByEmail(email);
