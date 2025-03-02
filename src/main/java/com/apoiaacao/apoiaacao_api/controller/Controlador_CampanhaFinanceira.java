@@ -99,7 +99,7 @@ public class Controlador_CampanhaFinanceira {
     return Repositorio_CampanhaFinanceira.findByEncerrada(true);
   }
 
-  @GetMapping("/imagemCampanha/{idCampanhaFinanceira}")
+  @GetMapping("/imagem/campanha/{idCampanhaFinanceira}")
 public ResponseEntity<ByteArrayResource> getImagemCampanha(@PathVariable int idCampanhaFinanceira) {
     Optional<CampanhaFinanceira> campanhaOptional = Repositorio_CampanhaFinanceira.findById(idCampanhaFinanceira);
     
