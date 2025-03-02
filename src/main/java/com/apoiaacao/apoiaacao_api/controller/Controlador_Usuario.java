@@ -54,6 +54,11 @@ public class Controlador_Usuario {
 
     @PostMapping("/salvarUsuario")
     public ResponseEntity<Usuario> salvarUsuario(@RequestBody Usuario usuario) {
+         // Verificar se algum campo obrigatório está nulo
+        if (usuario.getNome() == null || usuario.getEmail() == null || usuario.getSenha() == null) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
         // Adicionando log para verificar o ID do tipo de usuário
         System.out.println("TipoDeUsuario ID: " + usuario.getTipoDeUsuario().getIdTipoDeUsuario());
 
@@ -146,10 +151,11 @@ public class Controlador_Usuario {
     }
 
 
-    @GetMapping("/verHistoricoDoacoes/{email}")
-    public ResponseEntity<List<DoacaoWrapper>> verHistoricoDoacoes(@PathVariable String email) {
-        Usuario usuario = usuarioService.buscarUsuarioPorEmail(email);
-        if (usuario != null) {
+    @GetMapping("/verHistoricoDoacoes/{id}")
+    public ResponseEntity<List<DoacaoWrapper>> verHistoricoDoacoes(@PathVariable int id) {
+        Optional<Usuario> optionalUsuario = repositorio_Usuario.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
             List<DoacaoFinanceira> doacoesFinanceiras = repositorio_DoacaoFinanceira.findByIdUsuario(usuario);
             List<DoacaoDeItens> doacoesDeItens = repositorio_DoacaoDeItens.findByIdUsuario(usuario);
             List<DoacaoWrapper> historicoDoacoes = usuarioService.juntarDoacoes(doacoesFinanceiras, doacoesDeItens);
