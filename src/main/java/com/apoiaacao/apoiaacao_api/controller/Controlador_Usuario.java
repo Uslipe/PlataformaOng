@@ -60,7 +60,9 @@ public class Controlador_Usuario {
         int idTipoUsuario = usuario.getTipoDeUsuario().getIdTipoDeUsuario();
         System.out.println(idTipoUsuario);
 
-        Usuario user = usuarioService.criarUsuario(idTipoUsuario, usuario);
+        int idCartaoDeCredito = usuario.getIdCartaoDeCredito().getIdCartaoDeCredito();
+
+        Usuario user = usuarioService.criarUsuario(idTipoUsuario, idCartaoDeCredito, usuario);
         try {
             emailService.sendEmail(user.getEmail(), "ApoiaAção - Confirmação de Cadastro", "Seu cadastro foi realizado com sucesso!");
         } catch (Exception e) {
