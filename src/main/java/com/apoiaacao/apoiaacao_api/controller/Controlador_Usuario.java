@@ -48,12 +48,28 @@ public class Controlador_Usuario {
     @Autowired
     private EmailService emailService;
 
-    public Controlador_Usuario(Repositorio_Usuario repositorio_Usuario) {
-        this.repositorio_Usuario = repositorio_Usuario;
+    @Autowired
+    private final Repositorio_Usuario repositorioUsuario;
+
+    // ✅ Usando injeção via construtor
+    public Controlador_Usuario(UsuarioService usuarioService, Repositorio_Usuario repositorioUsuario) {
+        this.usuarioService = usuarioService;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @PostMapping("/salvarUsuario")
     public ResponseEntity<Usuario> salvarUsuario(@RequestBody Usuario usuario) {
+        // Verificar se algum campo obrigatório está nulo
+        if (usuario.getNome() == null || usuario.getEmail() == null || usuario.getSenha() == null) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
+        // Verificar se o email já está em uso
+        Usuario usuarioExistente = repositorio_Usuario.findByEmail(usuario.getEmail());
+        if (usuarioExistente != null) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         // Adicionando log para verificar o ID do tipo de usuário
         System.out.println("TipoDeUsuario ID: " + usuario.getTipoDeUsuario().getIdTipoDeUsuario());
 
@@ -71,20 +87,25 @@ public class Controlador_Usuario {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> loginData) {
-        String email = loginData.get("email");
-        String senha = loginData.get("senha");
+public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> loginData) {
+    String email = loginData.get("email");
+    String senha = loginData.get("senha");
 
-        String token = usuarioService.verificarUsuario(email, senha);
-        int idUsuario = repositorio_Usuario.findByEmail(email).getId();
-
-        if (!"Falha".equals(token)) {
-            LoginResponse resposta = new LoginResponse(token, idUsuario);
-            return ResponseEntity.ok(resposta);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
+    if (email == null || senha == null) {
+        return ResponseEntity.badRequest().body(new LoginResponse(null, 0));
     }
+
+    String token = usuarioService.verificarUsuario(email, senha);
+    
+    // 🔍 Evita NullPointerException
+    Usuario usuario = repositorioUsuario.findByEmail(email);
+    if (usuario == null || "Falha".equals(token)) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, 0));
+    }
+
+    return ResponseEntity.ok(new LoginResponse(token, usuario.getId()));
+}
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios")
@@ -146,10 +167,11 @@ public class Controlador_Usuario {
     }
 
 
-    @GetMapping("/verHistoricoDoacoes/{email}")
-    public ResponseEntity<List<DoacaoWrapper>> verHistoricoDoacoes(@PathVariable String email) {
-        Usuario usuario = usuarioService.buscarUsuarioPorEmail(email);
-        if (usuario != null) {
+    @GetMapping("/verHistoricoDoacoes/{id}")
+    public ResponseEntity<List<DoacaoWrapper>> verHistoricoDoacoes(@PathVariable int id) {
+        Optional<Usuario> optionalUsuario = repositorio_Usuario.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
             List<DoacaoFinanceira> doacoesFinanceiras = repositorio_DoacaoFinanceira.findByIdUsuario(usuario);
             List<DoacaoDeItens> doacoesDeItens = repositorio_DoacaoDeItens.findByIdUsuario(usuario);
             List<DoacaoWrapper> historicoDoacoes = usuarioService.juntarDoacoes(doacoesFinanceiras, doacoesDeItens);

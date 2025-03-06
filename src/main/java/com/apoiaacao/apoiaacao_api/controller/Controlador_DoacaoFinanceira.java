@@ -21,10 +21,13 @@ import com.apoiaacao.apoiaacao_api.service.EmailService;
 @CrossOrigin(origins = "http://localhost:5173/")
 @RestController
 public class Controlador_DoacaoFinanceira {
+
     @Autowired
     private DoacaoFinanceiraService doacaoFinanceiraService;
+
     @Autowired
     private Repositorio_DoacaoFinanceira Repositorio_DoacaoFinanceira;
+    
     @Autowired
     private EmailService emailService;
     
