@@ -1,12 +1,10 @@
 package com.apoiaacao.apoiaacao_api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doThrow;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -65,7 +63,7 @@ public class ControladorUsuarioTest {
     public void testSalvarUsuario_EntradasCorretas() { 
         System.out.println("Executando testSalvarUsuario_EntradasCorretas");
 
-        when(usuarioService.criarUsuario(any(Integer.class), any(Usuario.class))).thenReturn(usuario);
+        when(usuarioService.criarUsuario(any(Integer.class), anyInt(), any(Usuario.class))).thenReturn(usuario);
 
         ResponseEntity<Usuario> response = controladorUsuario.salvarUsuario(usuario);
 

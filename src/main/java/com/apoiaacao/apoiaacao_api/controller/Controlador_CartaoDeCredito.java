@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apoiaacao.apoiaacao_api.model.CartaoDeCredito;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
-import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CartaoDeCredito;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 import com.apoiaacao.apoiaacao_api.service.CartaoDeCreditoService;
 
@@ -24,14 +23,10 @@ public class Controlador_CartaoDeCredito {
     private CartaoDeCreditoService cartaoDeCreditoService;
 
     @Autowired
-    private Repositorio_CartaoDeCredito repositorio_CartaoDeCredito;
-
-    @Autowired
     private Repositorio_Usuario repositorioUsuario;
 
-    public Controlador_CartaoDeCredito(CartaoDeCreditoService cartaoDeCreditoService, Repositorio_CartaoDeCredito repositorio_CartaoDeCredito){
+    public Controlador_CartaoDeCredito(CartaoDeCreditoService cartaoDeCreditoService){
         this.cartaoDeCreditoService = cartaoDeCreditoService;
-        this.repositorio_CartaoDeCredito = repositorio_CartaoDeCredito;
     }
 
     @PreAuthorize("hasRole('DOADOR')")
