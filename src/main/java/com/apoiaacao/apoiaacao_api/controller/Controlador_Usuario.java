@@ -3,6 +3,7 @@ package com.apoiaacao.apoiaacao_api.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -211,6 +214,17 @@ public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> logi
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    //Endpoint para retornar as roles do usuário logado
+    @GetMapping("/roles")
+    public List<String> obterRolesDoUsuario() {
+        // Pega o usuário logado a partir do contexto de segurança
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    return authentication.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.toList());
     }
 
 }
