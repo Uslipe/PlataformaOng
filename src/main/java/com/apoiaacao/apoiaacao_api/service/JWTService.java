@@ -4,12 +4,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -36,13 +39,20 @@ public class JWTService {
 
     }
 
-    public String gerarToken(String subjetc){
+    public String gerarToken(UserDetails userDetails){
         Map<String, Object> claims = new HashMap<>();
+
+        // Extrai as roles do usuário e adiciona ao payload do token
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        claims.put("role", roles);
 
         return Jwts.builder()
                     .claims()
                     .add(claims)
-                    .subject(subjetc)
+                    .subject(userDetails.getUsername())
                     .issuedAt(new Date(System.currentTimeMillis()))
                     .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) //Diz que o token é aplicável por 30 min
                     .and()
@@ -58,6 +68,11 @@ public class JWTService {
 
     public String pegarSubjectDoToken(String token) {
         return extrairClaim(token, Claims::getSubject);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> pegarRolesDoToken(String token) {
+        return extrairClaim(token, claims -> claims.get("roles", List.class));
     }
 
     private <T> T extrairClaim(String token, Function<Claims, T> claimResolver) {
