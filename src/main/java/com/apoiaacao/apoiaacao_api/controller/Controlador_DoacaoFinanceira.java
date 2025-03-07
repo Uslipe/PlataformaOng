@@ -18,7 +18,7 @@ import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.service.DoacaoFinanceiraService;
 import com.apoiaacao.apoiaacao_api.service.EmailService;
 
-@CrossOrigin(origins = "http://localhost:5173/")
+@CrossOrigin(origins = {"http://localhost:5173/", "http://localhost:3000"})
 @RestController
 public class Controlador_DoacaoFinanceira {
 

@@ -29,7 +29,7 @@ import com.apoiaacao.apoiaacao_api.service.UsuarioService;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 import com.apoiaacao.apoiaacao_api.dto.LoginResponse;
 
-@CrossOrigin(origins = "http://localhost:5173/")
+@CrossOrigin(origins = {"http://localhost:5173/", "http://localhost:3000"})
 @RestController
 public class Controlador_Usuario {
     

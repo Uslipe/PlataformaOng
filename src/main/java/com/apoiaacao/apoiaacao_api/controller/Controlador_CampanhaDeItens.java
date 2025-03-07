@@ -20,7 +20,7 @@ import com.apoiaacao.apoiaacao_api.model.CategoriaItens;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaDeItens;
 import com.apoiaacao.apoiaacao_api.service.CampanhaDeItensService;
 
-@CrossOrigin(origins = "http://localhost:5173/")
+@CrossOrigin(origins = {"http://localhost:5173/", "http://localhost:3000"})
 @RestController
 public class Controlador_CampanhaDeItens {
   @Autowired
