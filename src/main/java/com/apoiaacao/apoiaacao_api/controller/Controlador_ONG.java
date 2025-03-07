@@ -53,14 +53,19 @@ public class Controlador_ONG {
     return Repositorio_ONG.findAll();
   }
 
-  @PutMapping("/validarONG")
-    public ResponseEntity<ONG> validarONG(@RequestBody ONG ong) {
-        ONG ongExistente = Repositorio_ONG.findById(ong.getId())
-                .orElseThrow(() -> new RuntimeException("ONG não encontrada"));
-        ongExistente.setValidada(true); // Define a ONG como validada
-        Repositorio_ONG.save(ongExistente);
-        return ResponseEntity.ok(ongExistente);
-    }
+  @PreAuthorize("hasRole('ADMIN')")
+  @PutMapping("/validarONG/{cnpj}")
+  public ResponseEntity<ONG> validarONG(@PathVariable String cnpj) {
+      Optional<ONG> optionalOng = Repositorio_ONG.findByCnpj(cnpj);
+      if (optionalOng.isPresent()) {
+          ONG ongExistente = optionalOng.get();
+          ongExistente.setValidada(true); // Define a ONG como validada
+          Repositorio_ONG.save(ongExistente);
+          return ResponseEntity.ok(ongExistente);
+      } else {
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      }
+  }
 
 @PutMapping("/atualizarONG/{cnpj}")
     public ResponseEntity<ONG> atualizarONG(@PathVariable String cnpj, @RequestBody ONG ongAtualizada) {
