@@ -9,11 +9,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.apoiaacao.apoiaacao_api.model.CartaoDeCredito;
 import com.apoiaacao.apoiaacao_api.model.DoacaoDeItens;
 import com.apoiaacao.apoiaacao_api.model.DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.model.DoacaoWrapper;
 import com.apoiaacao.apoiaacao_api.model.TipoDeUsuario;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
+import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CartaoDeCredito;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_TipoDeUsuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
@@ -25,6 +27,9 @@ public class UsuarioService {
 
     @Autowired
     private Repositorio_TipoDeUsuario repositorio_TipoDeUsuario;
+
+    @Autowired
+    private Repositorio_CartaoDeCredito repositorio_CartaoDeCredito;
     
     @Autowired
     private JWTService jwtService;
@@ -68,12 +73,16 @@ public class UsuarioService {
         return todasDoacoes;
     }
 
-    public Usuario criarUsuario(int idTipoDeUsuario, Usuario usuario) {
+    public Usuario criarUsuario(int idTipoDeUsuario, int idCartaoDeCredito ,Usuario usuario) {
         System.out.println("ID Tipo de Usuario: " + idTipoDeUsuario);
         TipoDeUsuario tipoDeUsuario = repositorio_TipoDeUsuario.findById(idTipoDeUsuario)
             .orElseThrow(() -> new RuntimeException("Tipo de usuário não encontrado")); // Tratamento de erro
+
+        CartaoDeCredito cartaoDeCredito = repositorio_CartaoDeCredito.findById(idCartaoDeCredito)
+            .orElseThrow(() -> new RuntimeException("Tipo de usuário não encontrado")); // Tratamento de erro;
     
         usuario.setTipoDeUsuario(tipoDeUsuario);
+        usuario.setIdCartaoDeCredito(cartaoDeCredito);
 
         String hashSenha = BCryptEncoder.encoder(usuario.getSenha());
         usuario.setSenha(hashSenha);

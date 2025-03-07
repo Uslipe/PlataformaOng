@@ -31,6 +31,11 @@ public class Usuario {
     @JoinColumn(name = "id_tipo_de_usuario", referencedColumnName = "id_tipo_de_usuario") // Relacionamento correto
     private TipoDeUsuario tipoDeUsuario;
 
+    @ManyToOne
+    @JoinColumn(name = "id_cartao_de_credito")
+    private CartaoDeCredito idCartaoDeCredito;
+
+
     // Construtor padrão
     public Usuario() {
     }
@@ -79,6 +84,14 @@ public class Usuario {
 
     public void setTipoDeUsuario(TipoDeUsuario tipoDeUsuario) {
         this.tipoDeUsuario = tipoDeUsuario;
+    }
+
+    public CartaoDeCredito getIdCartaoDeCredito() {
+        return idCartaoDeCredito;
+    }
+
+    public void setIdCartaoDeCredito(CartaoDeCredito idCartaoDeCredito) {
+        this.idCartaoDeCredito = idCartaoDeCredito;
     }
 
     @Override
