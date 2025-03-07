@@ -54,9 +54,9 @@ public class Controlador_ONG {
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @PutMapping("/validarONG/{cnpj}")
-  public ResponseEntity<ONG> validarONG(@PathVariable String cnpj) {
-      Optional<ONG> optionalOng = Repositorio_ONG.findByCnpj(cnpj);
+  @PutMapping("/validarONG/{id}")
+  public ResponseEntity<ONG> validarONG(@PathVariable int id) {
+      Optional<ONG> optionalOng = Repositorio_ONG.findById(id);
       if (optionalOng.isPresent()) {
           ONG ongExistente = optionalOng.get();
           ongExistente.setValidada(true); // Define a ONG como validada
