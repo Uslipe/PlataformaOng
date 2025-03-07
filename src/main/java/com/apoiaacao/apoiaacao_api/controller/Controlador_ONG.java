@@ -43,9 +43,9 @@ public class Controlador_ONG {
   }
 
   @PostMapping("/loginOng")
-    public String login(@RequestBody ONG ong){
-        return ongService.verificarOng(ong);
-    }
+  public String login(@RequestBody ONG ong) {
+    return ongService.verificarOng(ong);
+  }
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/listarONG")
