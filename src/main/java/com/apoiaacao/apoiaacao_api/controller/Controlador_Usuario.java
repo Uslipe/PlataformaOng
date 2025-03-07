@@ -10,6 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +29,7 @@ import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoDeItens;
 import com.apoiaacao.apoiaacao_api.service.EmailService;
+import com.apoiaacao.apoiaacao_api.service.JWTService;
 import com.apoiaacao.apoiaacao_api.service.UsuarioService;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 import com.apoiaacao.apoiaacao_api.dto.LoginResponse;
@@ -36,11 +41,20 @@ public class Controlador_Usuario {
     @Autowired
     private Repositorio_Usuario repositorio_Usuario;
 
+    @Autowired
+    private JWTService jwtService;
+
     @Autowired 
     private UsuarioService usuarioService;
 
     @Autowired
     private Repositorio_DoacaoFinanceira repositorio_DoacaoFinanceira;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private org.springframework.security.core.userdetails.UserDetailsService userDetailsService; //Para obter o UserDetails
 
     @Autowired
     private Repositorio_DoacaoDeItens repositorio_DoacaoDeItens;
@@ -89,7 +103,7 @@ public class Controlador_Usuario {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> loginData) {
+public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> loginData) {
     String email = loginData.get("email");
     String senha = loginData.get("senha");
 
@@ -97,16 +111,32 @@ public class Controlador_Usuario {
         return ResponseEntity.badRequest().body(new LoginResponse(null, 0));
     }
 
-    String token = usuarioService.verificarUsuario(email, senha);
-    
-    // 🔍 Evita NullPointerException
-    Usuario usuario = repositorioUsuario.findByEmail(email);
-    if (usuario == null || "Falha".equals(token)) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, 0));
+    // Tenta autenticar o usuário com email e senha
+    Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(email, senha)
+    );
+
+    // Verifica se a autenticação foi bem-sucedida
+    if (authentication.isAuthenticated()) {
+        // Obtém o UserDetails do usuário autenticado
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+        // Gera o token JWT para o usuário autenticado
+        String token = jwtService.gerarToken(userDetails);
+
+        // Se o token foi gerado com sucesso, retornamos a resposta com o token e o ID do usuário
+        Usuario usuario = repositorioUsuario.findByEmail(email); // Busca o usuário no banco
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, 0));
+        }
+
+        return ResponseEntity.ok(new LoginResponse(token, usuario.getId()));
     }
 
-    return ResponseEntity.ok(new LoginResponse(token, usuario.getId()));
+    // Se a autenticação falhar
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, 0));
 }
+
 
 
     @PreAuthorize("hasRole('ADMIN')")

@@ -4,6 +4,7 @@ package com.apoiaacao.apoiaacao_api;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -74,7 +75,7 @@ public void login() {
     assertNotNull(controladorUsuario, "controladorUsuario está nulo!");
 
     // 🔍 Garantindo que `usuarioService` retorne um token válido
-    when(usuarioService.verificarUsuario(anyString(), anyString())).thenReturn("token");
+    when(usuarioService.verificarUsuario(any(Usuario.class))).thenReturn("token");
 
     // 🔍 Garantindo que `repositorioUsuario.findByEmail()` não retorne null
     when(repositorioUsuario.findByEmail(anyString())).thenReturn(usuario);
@@ -117,7 +118,7 @@ public void loginComEmailESenhaVazios() {
     assertNotNull(controladorUsuario, "controladorUsuario está nulo!");
 
     // 🔍 Mockando o comportamento esperado para email e senha vazios
-    when(usuarioService.verificarUsuario("", "")).thenReturn(null);
+    when(usuarioService.verificarUsuario(any(Usuario.class))).thenReturn(null);
     when(repositorioUsuario.findByEmail("")).thenReturn(null);
 
     // Criando os dados de login vazios
