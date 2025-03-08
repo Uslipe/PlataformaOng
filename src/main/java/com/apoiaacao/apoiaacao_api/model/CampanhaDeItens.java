@@ -54,6 +54,9 @@ public class CampanhaDeItens{
     @Column(name = "encerrada")
     private boolean encerrada;
 
+    @Column(name = "itens_a_caminho")
+    private int itensACaminho;
+
     public CampanhaDeItens() {
     }
 
@@ -149,5 +152,12 @@ public class CampanhaDeItens{
         this.encerrada = encerrada;
     }
 
+    public int isItensACaminho() {
+        return itensACaminho;
+    }
+
+    public void setItensACaminho(int itensACaminho) {
+        this.itensACaminho = itensACaminho;
+    }
     
 }
