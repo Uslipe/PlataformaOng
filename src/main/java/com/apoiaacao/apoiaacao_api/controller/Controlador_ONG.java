@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apoiaacao.apoiaacao_api.dto.LoginResponse;
 import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_ONG;
 import com.apoiaacao.apoiaacao_api.service.ONGService;
@@ -43,9 +44,15 @@ public class Controlador_ONG {
   }
 
   @PostMapping("/loginOng")
-    public String login(@RequestBody ONG ong){
-        return ongService.verificarOng(ong);
+  public ResponseEntity<LoginResponse> loginOng(@RequestBody ONG ong) {
+    LoginResponse response = ongService.verificarOng(ong);
+
+    if (response != null) {
+      return ResponseEntity.ok(response);
     }
+
+    return ResponseEntity.status(401).body(null);
+  }
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/listarONG")
@@ -53,31 +60,49 @@ public class Controlador_ONG {
     return Repositorio_ONG.findAll();
   }
 
-  @PutMapping("/validarONG")
-    public ResponseEntity<ONG> validarONG(@RequestBody ONG ong) {
-        ONG ongExistente = Repositorio_ONG.findById(ong.getId())
-                .orElseThrow(() -> new RuntimeException("ONG não encontrada"));
-        ongExistente.setValidada(true); // Define a ONG como validada
-        Repositorio_ONG.save(ongExistente);
-        return ResponseEntity.ok(ongExistente);
-    }
+  @PreAuthorize("hasRole('ADMIN')")
+  @PutMapping("/validarONG/{id}")
+  public ResponseEntity<ONG> validarONG(@PathVariable int id) {
+      Optional<ONG> optionalOng = Repositorio_ONG.findById(id);
+      if (optionalOng.isPresent()) {
+          ONG ongExistente = optionalOng.get();
+          ongExistente.setValidada(true); // Define a ONG como validada
+          Repositorio_ONG.save(ongExistente);
+          return ResponseEntity.ok(ongExistente);
+      } else {
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      }
+  }
 
-@PutMapping("/atualizarONG/{cnpj}")
-    public ResponseEntity<ONG> atualizarONG(@PathVariable String cnpj, @RequestBody ONG ongAtualizada) {
-        Optional<ONG> optionalOng = Repositorio_ONG.findByCnpj(cnpj);
-        if (optionalOng.isPresent()) {
-            ONG ongExistente = optionalOng.get();
-            ongExistente.setNome(ongAtualizada.getNome());
-            ongExistente.setEndereco(ongAtualizada.getEndereco());
-            ongExistente.setContaBancaria(ongAtualizada.getContaBancaria());
-            ongExistente.setChavePix(ongAtualizada.getChavePix());
-
-            Repositorio_ONG.save(ongExistente);
-            
-            return ResponseEntity.ok(ongExistente);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+  @GetMapping("/buscarONG/{id}")
+  public ResponseEntity<ONG> buscarOng(@PathVariable int id) {
+    Optional<ONG> optionalOng = Repositorio_ONG.findById(id);
+    if (optionalOng.isPresent()) {
+        ONG ong = optionalOng.get();
+        return ResponseEntity.ok(ong);
+    } else {
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+  }
+
+  @PreAuthorize("hasRole('ONG')")
+  @PutMapping("/atualizarONG/{id}")
+  public ResponseEntity<ONG> atualizarONG(@PathVariable int id, @RequestBody ONG ongAtualizada) {
+    Optional<ONG> optionalOng = Repositorio_ONG.findById(id);
+    if (optionalOng.isPresent()) {
+      ONG ongExistente = optionalOng.get();
+      ongExistente.setNome(ongAtualizada.getNome());
+      ongExistente.setEndereco(ongAtualizada.getEndereco());
+      ongExistente.setContaBancaria(ongAtualizada.getContaBancaria());
+      ongExistente.setChavePix(ongAtualizada.getChavePix());
+      if (ongAtualizada.getSenha() != null) {
+        ongExistente.setSenha(BCryptEncoder.encoder(ongAtualizada.getSenha())); // Encriptar a nova senha
+      }
+      Repositorio_ONG.save(ongExistente);
+      return ResponseEntity.ok(ongExistente);
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }
 
 }

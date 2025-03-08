@@ -35,8 +35,7 @@ public class DoacaoFinanceiraService {
         doacao.setIdUsuario(usuario);
         doacao.setDataDoacao(java.time.LocalDate.now());
         campanha.setValorArrecadado(doacao.getValor() + campanha.getValorArrecadado());
-        // repositorio_CampanhaFinanceira.save(campanha);
-
+    
         // Salva a doação financeira
         return repositorio_DoacaoFinanceira.save(doacao);
     }

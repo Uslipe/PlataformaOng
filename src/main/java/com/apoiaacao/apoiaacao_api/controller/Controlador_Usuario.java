@@ -106,41 +106,39 @@ public class Controlador_Usuario {
 
 
     @PostMapping("/login")
-public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> loginData) {
-    String email = loginData.get("email");
-    String senha = loginData.get("senha");
+    public ResponseEntity<LoginResponse> login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String senha = loginData.get("senha");
 
-    if (email == null || senha == null) {
-        return ResponseEntity.badRequest().body(new LoginResponse(null, 0));
-    }
+        if (email == null || senha == null) {
+            return ResponseEntity.badRequest().body(new LoginResponse(null, 0));
+        }   
 
-    // Tenta autenticar o usuário com email e senha
-    Authentication authentication = authenticationManager.authenticate(
+        // Tenta autenticar o usuário com email e senha
+        Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(email, senha)
-    );
+        );
 
-    // Verifica se a autenticação foi bem-sucedida
-    if (authentication.isAuthenticated()) {
-        // Obtém o UserDetails do usuário autenticado
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        // Verifica se a autenticação foi bem-sucedida
+        if (authentication.isAuthenticated()) {
+            // Obtém o UserDetails do usuário autenticado
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-        // Gera o token JWT para o usuário autenticado
-        String token = jwtService.gerarToken(userDetails);
+            // Gera o token JWT para o usuário autenticado
+            String token = jwtService.gerarToken(userDetails);
 
-        // Se o token foi gerado com sucesso, retornamos a resposta com o token e o ID do usuário
-        Usuario usuario = repositorioUsuario.findByEmail(email); // Busca o usuário no banco
-        if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, 0));
+            // Se o token foi gerado com sucesso, retornamos a resposta com o token e o ID do usuário
+            Usuario usuario = repositorioUsuario.findByEmail(email); // Busca o usuário no banco
+            if (usuario == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, 0));
+            }
+
+            return ResponseEntity.ok(new LoginResponse(token, usuario.getId()));
         }
 
-        return ResponseEntity.ok(new LoginResponse(token, usuario.getId()));
+        // Se a autenticação falhar
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, 0));
     }
-
-    // Se a autenticação falhar
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, 0));
-}
-
-
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios")

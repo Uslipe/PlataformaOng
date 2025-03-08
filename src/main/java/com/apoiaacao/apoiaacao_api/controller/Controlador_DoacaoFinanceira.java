@@ -1,5 +1,7 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +48,10 @@ public class Controlador_DoacaoFinanceira {
         double valorDoacao = doacaoFinanceira.getValor();
         MetodoPagamento formPagamentoDoacao = doacaoFinanceira.getFormaPagamento();
         String nomeCampanha = doacao.getCampanha().getNome();
+        LocalDate dataDoacao = doacao.getDataDoacao();
         try {
-            emailService.sendEmail(emailDoador, "ApoiaAção - Confirmação de doação financeira", "Doação de R$" + valorDoacao + " no " + formPagamentoDoacao + " para a campanha " + nomeCampanha + " realizada com sucesso!");
+            emailService.sendEmail(emailDoador, "ApoiaAção - Confirmação de doação financeira", "Doação de R$" + valorDoacao + " no " + formPagamentoDoacao + " para a campanha " + nomeCampanha + " realizada com sucesso!" + "\n"
+            + "Data da Doação: " + dataDoacao);
         } catch (Exception e) {
             e.printStackTrace();
         }

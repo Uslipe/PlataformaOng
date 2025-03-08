@@ -29,14 +29,14 @@ public class DoacaoDeItensService {
     public DoacaoDeItens criarDoacao(int idCampanhaDeItens, int idUsuario, DoacaoDeItens doacao){
         //Buscar usuário e campanha pelo id
         Usuario usuario = repositorio_Usuario.findById(idUsuario)
-                               .orElseThrow(() -> new RuntimeException("Usuario não encontrada"));
+                               .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
         CampanhaDeItens campanha = repositorio_CampanhaDeItens.findById(idCampanhaDeItens)
                                .orElseThrow(() -> new RuntimeException("Campanha não encontrada"));
-        System.out.println(campanha); //Log de impressão da campanha
 
         //Atribuir atributos acima a doação
         doacao.setCampanhaDeItens(campanha);
         doacao.setUsuario(usuario);
+        doacao.setDataDoacao(java.time.LocalDate.now());
         campanha.setQuantidadeDeItens(doacao.getQuantidadeDeItens() + campanha.getQuantidadeDeItens());
 
         // Salvar a campanha financeira
