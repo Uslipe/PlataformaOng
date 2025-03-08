@@ -57,6 +57,15 @@ public class CampanhaDeItens{
     @Column(name = "itens_a_caminho")
     private int itensACaminho;
 
+    @Column(name = "nome_imagem")
+    private String nomeDaImagem;
+
+    @Column(name = "tipo_imagem")
+    private String tipoDaImagem;
+
+    @Column(name = "dados_imagem", columnDefinition = "BYTEA")
+    private byte[] dadosDaImagem;
+
     public CampanhaDeItens() {
     }
 
@@ -158,6 +167,34 @@ public class CampanhaDeItens{
 
     public void setItensACaminho(int itensACaminho) {
         this.itensACaminho = itensACaminho;
+    }
+
+    public int getItensACaminho() {
+        return itensACaminho;
+    }
+
+    public String getNomeDaImagem() {
+        return nomeDaImagem;
+    }
+
+    public void setNomeDaImagem(String nomeDaImagem) {
+        this.nomeDaImagem = nomeDaImagem;
+    }
+
+    public String getTipoDaImagem() {
+        return tipoDaImagem;
+    }
+
+    public void setTipoDaImagem(String tipoDaImagem) {
+        this.tipoDaImagem = tipoDaImagem;
+    }
+
+    public byte[] getDadosDaImagem() {
+        return dadosDaImagem;
+    }
+
+    public void setDadosDaImagem(byte[] dadosDaImagem) {
+        this.dadosDaImagem = dadosDaImagem;
     }
     
 }
