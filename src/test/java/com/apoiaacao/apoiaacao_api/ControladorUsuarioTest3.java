@@ -92,7 +92,7 @@ public void login() {
     System.out.println("Resposta HTTP: " + loginResponse.getStatusCode());
     if (loginResponse.getBody() != null) {
         System.out.println("Token recebido: " + loginResponse.getBody().getToken());
-        System.out.println("ID do Usuário: " + loginResponse.getBody().getIdUsuario());
+        System.out.println("ID do Usuário: " + loginResponse.getBody().getId());
     } else {
         System.out.println("Resposta sem corpo!");
     }
@@ -103,7 +103,7 @@ public void login() {
     assertNotNull(loginResponse.getBody());
     assertNotNull(loginResponse.getBody().getToken());
     assertEquals("token", loginResponse.getBody().getToken());
-    assertEquals(1, loginResponse.getBody().getIdUsuario());
+    assertEquals(1, loginResponse.getBody().getId());
 }
 
 
@@ -133,7 +133,7 @@ public void loginComEmailESenhaVazios() {
     System.out.println("Resposta HTTP: " + loginResponse.getStatusCode());
     if (loginResponse.getBody() != null) {
         System.out.println("Token recebido: " + loginResponse.getBody().getToken());
-        System.out.println("ID do Usuário: " + loginResponse.getBody().getIdUsuario());
+        System.out.println("ID do Usuário: " + loginResponse.getBody().getId());
     } else {
         System.out.println("Resposta sem corpo!");
     }
@@ -147,7 +147,7 @@ public void loginComEmailESenhaVazios() {
     
     // ✅ Validações com `assertNull()`
     assertNull(loginResponse.getBody().getToken(), "O token deveria ser nulo!");
-    assertEquals(0, loginResponse.getBody().getIdUsuario(), "O ID do usuário deveria ser 0!");
+    assertEquals(0, loginResponse.getBody().getId(), "O ID do usuário deveria ser 0!");
 }
 
 }

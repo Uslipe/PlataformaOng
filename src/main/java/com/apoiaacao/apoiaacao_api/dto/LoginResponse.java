@@ -2,11 +2,11 @@ package com.apoiaacao.apoiaacao_api.dto;
 
 public class LoginResponse {
     private String token;
-    private int idUsuario;
+    private int id;
 
-    public LoginResponse(String token, int idUsuario) {
+    public LoginResponse(String token, int id) {
         this.token = token;
-        this.idUsuario = idUsuario;
+        this.id = id;
     }
 
     public String getToken() {
@@ -17,11 +17,11 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(int id) {
+        this.id = id;
     }
 }

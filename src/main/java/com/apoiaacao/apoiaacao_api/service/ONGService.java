@@ -7,7 +7,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.apoiaacao.apoiaacao_api.dto.LoginResponse;
 import com.apoiaacao.apoiaacao_api.model.ONG;
+import com.apoiaacao.apoiaacao_api.repositories.Repositorio_ONG;
 
 @Service
 public class ONGService {
@@ -21,16 +23,26 @@ public class ONGService {
     @Autowired
     private org.springframework.security.core.userdetails.UserDetailsService userDetailsService; //Para obter o UserDetails
 
-    public String verificarOng(ONG ong){
+    @Autowired
+    private Repositorio_ONG repositorio_ONG;
+
+    public LoginResponse verificarOng(ONG ong){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(ong.getCnpj(), ong.getSenha()));
 
         if(authentication.isAuthenticated()){
             UserDetails userDetails = userDetailsService.loadUserByUsername(ong.getCnpj());
-            
-            // Gera o token com o UserDetails
-            return jwtService.gerarToken(userDetails);
+            String token = jwtService.gerarToken(userDetails);
+            int idOng = getIdOngByCnpj(ong.getCnpj());
+            // Retorna o token e o id da ONG
+            return new LoginResponse(token, idOng);
         }
 
-        return "Falha!";
+        return null;
+    }
+
+    public int getIdOngByCnpj(String cnpj) {
+        ONG ong = repositorio_ONG.findByCnpj(cnpj)
+                .orElseThrow(() -> new RuntimeException("ONG não encontrada"));
+        return ong.getId();
     }
 }
