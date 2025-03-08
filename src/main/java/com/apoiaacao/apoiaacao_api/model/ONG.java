@@ -99,7 +99,7 @@ public class ONG{
         this.id = id;
     }
 
-    public boolean estaValidada() {
+    public boolean getValidada() {
         return validada;
     }
 
