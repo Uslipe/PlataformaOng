@@ -3,6 +3,8 @@ package com.apoiaacao.apoiaacao_api.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,13 +14,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.apoiaacao.apoiaacao_api.model.CampanhaDeItens;
 import com.apoiaacao.apoiaacao_api.model.ONG;
 import com.apoiaacao.apoiaacao_api.model.CategoriaItens;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CampanhaDeItens;
 import com.apoiaacao.apoiaacao_api.service.CampanhaDeItensService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @CrossOrigin(origins = {"http://localhost:5173/", "http://localhost:3000"})
 @RestController
@@ -34,10 +41,20 @@ public class Controlador_CampanhaDeItens {
   }
 
   @PostMapping("/salvarCampanhaDeItens")
-  public ResponseEntity<CampanhaDeItens> salvarCampanhaDeItens(@RequestBody CampanhaDeItens campanhaDeItens) {
-    int idOng = campanhaDeItens.getIdOng().getId();
-    CampanhaDeItens campanha = campanhaDeItensService.criarCampanha(idOng, campanhaDeItens);
-    return ResponseEntity.status(HttpStatus.CREATED).body(campanha);
+  public ResponseEntity<?> salvarCampanhaDeItens(@RequestPart("campanhaDeItens") String campanhaDeItens, @RequestPart(value = "imagem",required = false) MultipartFile imagem) {
+
+    try {
+      ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);;
+      CampanhaDeItens campanhaDeItens2 = objectMapper.readValue(campanhaDeItens, CampanhaDeItens.class);
+
+      //Pegar o id da ong
+      int idOng = campanhaDeItens2.getIdOng().getId();
+      CampanhaDeItens campanha = campanhaDeItensService.criarCampanha(idOng, campanhaDeItens, imagem);
+      return ResponseEntity.status(HttpStatus.CREATED).body(campanha);
+
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
   }
 
   @DeleteMapping("/deletarCampanhaDeItens")
@@ -85,6 +102,33 @@ public class Controlador_CampanhaDeItens {
   @GetMapping("/listarCampanhasDeItensPorCategoriaItem")
   public Iterable<CampanhaDeItens> listarCampanhasDeItensPorCategoriaItem(@RequestBody CategoriaItens categoriaItens) {
     return Repositorio_CampanhaDeItens.findByCategoriaItens(categoriaItens);
+  }
+
+  @GetMapping("/imagem/campanhaDeItens/{idCampanhaDeItens}")
+  public ResponseEntity<ByteArrayResource> getImagemCampanha(@PathVariable int idCampanhaDeItens) {
+      Optional<CampanhaDeItens> campanhaOptional = Repositorio_CampanhaDeItens.findById(idCampanhaDeItens);
+      
+      if (campanhaOptional.isPresent()) {
+        CampanhaDeItens campanha = campanhaOptional.get();
+          
+          // Recupera os dados binários da imagem e o tipo da imagem
+          byte[] dadosImagem = campanha.getDadosDaImagem();
+          String tipoImagem = campanha.getTipoDaImagem();
+          
+          if (dadosImagem != null && tipoImagem != null) {
+              // Converte os dados binários para um recurso
+              ByteArrayResource resource = new ByteArrayResource(dadosImagem);
+
+              // Retorna a imagem com o tipo correto
+              return ResponseEntity.ok()
+                      .header(HttpHeaders.CONTENT_TYPE, tipoImagem)  // Define o tipo de conteúdo da imagem
+                      .body(resource);
+          } else {
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Caso a imagem não exista
+          }
+      } else {
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // Campanha não encontrada
+      }
   }
 
 }
