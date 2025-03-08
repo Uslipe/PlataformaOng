@@ -27,7 +27,7 @@ import com.apoiaacao.apoiaacao_api.repositories.Repositorio_DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.service.DoacaoFinanceiraService;
 
 @ExtendWith(MockitoExtension.class)
-public class ControladorDoacaoFinanceira {
+public class ControladorDoacaoFinanceiraTest {
     
     @Mock
     private DoacaoFinanceiraService doacaoFinanceiraService;
