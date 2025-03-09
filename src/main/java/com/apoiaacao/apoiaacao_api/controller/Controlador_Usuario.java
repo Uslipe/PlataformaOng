@@ -87,14 +87,8 @@ public class Controlador_Usuario {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // Adicionando log para verificar o ID do tipo de usuário
-        System.out.println("TipoDeUsuario ID: " + usuario.getTipoDeUsuario().getIdTipoDeUsuario());
-
         int idTipoUsuario = usuario.getTipoDeUsuario().getIdTipoDeUsuario();
-        System.out.println(idTipoUsuario);
-
         int idCartaoDeCredito = 0;
-
         Usuario user = usuarioService.criarUsuario(idTipoUsuario, idCartaoDeCredito, usuario);
         try {
             emailService.sendEmail(user.getEmail(), "ApoiaAção - Confirmação de Cadastro", "Seu cadastro foi realizado com sucesso!");

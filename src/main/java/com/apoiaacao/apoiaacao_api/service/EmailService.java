@@ -19,9 +19,7 @@ public class EmailService {
             message.setSubject(subject);
             message.setText(text);
             mailSender.send(message);
-            System.out.println("Email enviado para: " + to);
         } catch (MailException e) {
-            System.err.println("Erro ao enviar email para: " + to);
             e.printStackTrace();
         }
     }

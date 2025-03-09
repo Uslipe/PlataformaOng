@@ -49,11 +49,7 @@ public class CampanhaDeItensService {
             campanha.setTipoDaImagem(imagem.getContentType());
     
             byte[] dadosImagem = imagem.getBytes();
-            campanha.setDadosDaImagem(dadosImagem);
-        
-            // Debug para verificar o tipo dos dados antes de salvar
-            System.out.println("Tipo de dadosDaImagem: " + dadosImagem.getClass().getName());
-            System.out.println("Tamanho da imagem: " + dadosImagem.length);    
+            campanha.setDadosDaImagem(dadosImagem); 
         }
 
         // Salvar a campanha financeira

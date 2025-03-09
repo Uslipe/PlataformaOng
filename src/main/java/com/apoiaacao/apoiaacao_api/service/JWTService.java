@@ -32,7 +32,6 @@ public class JWTService {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
             SecretKey secretKey = keyGenerator.generateKey();
             key = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-            System.out.println("Chave gerada: " + key);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -91,7 +90,6 @@ public class JWTService {
     public boolean validarToken(String token, UserDetails userDetails) {
         final String email = pegarSubjectDoToken(token);
         boolean valido = (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
-        System.out.println("Token válido: " + valido); // Log da validação do token
         return valido;
     }
 

@@ -27,8 +27,6 @@ public class DoacaoFinanceiraService {
                                .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
         CampanhaFinanceira campanha = repositorio_CampanhaFinanceira.findById(idCampanhaFinanceira)
                                .orElseThrow(() -> new RuntimeException("Campanha não encontrada"));
-        System.out.println(campanha);
-
         
         //Atribuir atributos acima a doação
         doacao.setCampanha(campanha);

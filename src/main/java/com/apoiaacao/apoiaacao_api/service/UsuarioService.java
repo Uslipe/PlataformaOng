@@ -77,7 +77,6 @@ public class UsuarioService {
     }
 
     public Usuario criarUsuario(int idTipoDeUsuario, int idCartaoDeCredito ,Usuario usuario) {
-        System.out.println("ID Tipo de Usuario: " + idTipoDeUsuario);
         TipoDeUsuario tipoDeUsuario = repositorio_TipoDeUsuario.findById(idTipoDeUsuario)
             .orElseThrow(() -> new RuntimeException("Tipo de usuário não encontrado")); // Tratamento de erro
 

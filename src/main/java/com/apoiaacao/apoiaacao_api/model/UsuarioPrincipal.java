@@ -19,7 +19,6 @@ public class UsuarioPrincipal implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String role = usuario.getTipoDeUsuario().getRoleTipoDeUsuario();
         String roleWithPrefix = "ROLE_" + role;
-        System.out.println("Role atribuída ao usuário: " + roleWithPrefix);
         return Collections.singleton(new SimpleGrantedAuthority(roleWithPrefix));
     }
 

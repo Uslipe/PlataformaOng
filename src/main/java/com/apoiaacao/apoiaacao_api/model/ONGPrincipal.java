@@ -30,7 +30,6 @@ public class ONGPrincipal implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String role = ong.getTipoDeUsuario().getRoleTipoDeUsuario();
         String roleWithPrefix = "ROLE_" + role;
-        System.out.println("Role atribuída a ONG: " + roleWithPrefix);
         return Collections.singleton(new SimpleGrantedAuthority(roleWithPrefix));
     }
 }
