@@ -57,8 +57,12 @@ public class Controlador_CampanhaFinanceira {
   }
 
   @DeleteMapping("/deletarCampanhaFinanceira/{id}")
-  public void deletarCampanhaFinanceira(@PathVariable int id) {
-    Repositorio_CampanhaFinanceira.deleteById(id);
+  public ResponseEntity<Void> deletarCampanhaFinanceira(@PathVariable int id) {
+    //Se conseguiu deletar
+    if(campanhaFinanceiraService.deletarCampanhaFinanceira(id)){
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.notFound().build();
   }
   
  @PutMapping("/editarCampanhaFinanceira/{id}")
