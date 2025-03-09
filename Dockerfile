@@ -10,6 +10,6 @@ RUN mvn -f /home/app/pom.xml clean package
 # Package stage
 #
 FROM openjdk:21
-COPY --from=build /home/app/target/apoiaacao_api-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar  # Corrigido para o nome do JAR
+COPY --from=build /home/felipe/Documentos/Projetos/PlataformaOng/target/apoiaacao_api-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar  # Corrigido para o nome do JAR
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/usr/local/lib/demo.jar"]
