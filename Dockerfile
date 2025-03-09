@@ -1,15 +1,13 @@
-#
-# Build stage
-#
+# Etapa de construção (build)
 FROM maven:3.9.8-eclipse-temurin-21 AS build
+WORKDIR /home/app
 COPY src /home/app/src
 COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
+RUN mvn clean package
 
-#
-# Package stage
-#
+# Etapa final (runtime)
 FROM openjdk:21
-COPY --from=build /home/felipe/Documentos/Projetos/PlataformaOng/target/apoiaacao_api-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar  # Corrigido para o nome do JAR
+WORKDIR /usr/local/lib
+COPY --from=build /home/app/target/apoiaacao_api-0.0.1-SNAPSHOT.jar demo.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/usr/local/lib/demo.jar"]
+ENTRYPOINT ["java", "-jar", "demo.jar"]
