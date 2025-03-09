@@ -58,8 +58,11 @@ public class Controlador_CampanhaDeItens {
   }
 
   @DeleteMapping("/deletarCampanhaDeItens/{id}")
-  public void deletarCampanhaDeItens(@PathVariable int id) {
-    Repositorio_CampanhaDeItens.deleteById(id);
+  public ResponseEntity<Void> deletarCampanhaDeItens(@PathVariable int id) {
+    if(campanhaDeItensService.deletarCampanhaFinanceira(id)){
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.notFound().build();
   }
 
   @PutMapping("/editarCampanhaDeItens/{id}")
