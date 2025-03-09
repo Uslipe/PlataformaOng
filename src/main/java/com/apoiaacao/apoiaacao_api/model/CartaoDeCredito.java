@@ -2,8 +2,6 @@ package com.apoiaacao.apoiaacao_api.model;
 
 import java.time.LocalDate;
 
-import javax.print.DocFlavor.STRING;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
