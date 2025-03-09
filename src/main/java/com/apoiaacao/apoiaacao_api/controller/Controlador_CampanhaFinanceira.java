@@ -56,9 +56,9 @@ public class Controlador_CampanhaFinanceira {
     
   }
 
-  @DeleteMapping("/deletarCampanhaFinanceira")
-  public void deletarCampanhaFinanceira(@RequestBody CampanhaFinanceira campanhaFinanceira) {
-    Repositorio_CampanhaFinanceira.delete(campanhaFinanceira);
+  @DeleteMapping("/deletarCampanhaFinanceira/{id}")
+  public void deletarCampanhaFinanceira(@PathVariable int id) {
+    Repositorio_CampanhaFinanceira.deleteById(id);
   }
   
  @PutMapping("/editarCampanhaFinanceira/{id}")

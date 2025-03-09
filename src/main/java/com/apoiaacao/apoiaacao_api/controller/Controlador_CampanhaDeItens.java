@@ -57,9 +57,9 @@ public class Controlador_CampanhaDeItens {
     }
   }
 
-  @DeleteMapping("/deletarCampanhaDeItens")
-  public void deletarCampanhaDeItens(@RequestBody CampanhaDeItens campanhaDeItens) {
-    Repositorio_CampanhaDeItens.delete(campanhaDeItens);
+  @DeleteMapping("/deletarCampanhaDeItens/{id}")
+  public void deletarCampanhaDeItens(@PathVariable int id) {
+    Repositorio_CampanhaDeItens.deleteById(id);
   }
 
   @PutMapping("/editarCampanhaDeItens/{id}")
@@ -84,8 +84,8 @@ public class Controlador_CampanhaDeItens {
     return Repositorio_CampanhaDeItens.findAll();
   }
 
-  @GetMapping("/listarCampanhasDeItensPorONG")
-  public Iterable<CampanhaDeItens> listarCampanhasDeItensPorONG(@RequestBody ONG idOng) {
+  @GetMapping("/listarCampanhasDeItensPorONG/{idOng}")
+  public Iterable<CampanhaDeItens> listarCampanhasDeItensPorONG(@PathVariable ONG idOng) {
     return Repositorio_CampanhaDeItens.findByIdOng(idOng);
   }
 
