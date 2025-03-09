@@ -1,11 +1,13 @@
 package com.apoiaacao.apoiaacao_api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +45,27 @@ public class Controlador_CartaoDeCredito {
         CartaoDeCredito cartao = cartaoDeCreditoService.criarCartao(cartaoDeCredito, usuario);
 
         return ResponseEntity.ok(cartao);
+    }
+
+    @PreAuthorize("hasRole('DOADOR')")
+    @GetMapping("/ultimoCartaoDeCredito")
+    public ResponseEntity<CartaoDeCredito> getUltimoCartaoDeCredito() {
+        // Obtém o nome do usuário autenticado
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUsuario = authentication.getName(); // Assume que o email é o identificador do usuário
+
+        // Busca o usuário no banco de dados
+        Usuario usuario = repositorioUsuario.findByEmail(emailUsuario);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        // Recupera o último cartão cadastrado pelo usuário
+        CartaoDeCredito ultimoCartao = cartaoDeCreditoService.getUltimoCartao(usuario);
+        if (ultimoCartao == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.ok(ultimoCartao);
     }
 }

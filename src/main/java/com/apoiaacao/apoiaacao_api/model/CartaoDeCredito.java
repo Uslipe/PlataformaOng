@@ -2,6 +2,8 @@ package com.apoiaacao.apoiaacao_api.model;
 
 import java.time.LocalDate;
 
+import javax.print.DocFlavor.STRING;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +30,7 @@ public class CartaoDeCredito {
     private LocalDate dataDeValidade;
 
     @Column(name = "cvv")
-    private int cvv;
+    private String cvv;
 
     public int getIdCartaoDeCredito() {
         return idCartaoDeCredito;
@@ -62,11 +64,11 @@ public class CartaoDeCredito {
         this.dataDeValidade = dataDeValidade;
     }
 
-    public int getCvv() {
+    public String getCvv() {
         return cvv;
     }
 
-    public void setCvv(int cvv) {
+    public void setCvv(String cvv) {
         this.cvv = cvv;
     }
 }

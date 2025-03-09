@@ -6,16 +6,38 @@ import org.springframework.stereotype.Service;
 import com.apoiaacao.apoiaacao_api.model.CartaoDeCredito;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CartaoDeCredito;
+import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 
 @Service
 public class CartaoDeCreditoService {
     @Autowired
     Repositorio_CartaoDeCredito repositorio_CartaoDeCredito;
 
-    public CartaoDeCredito criarCartao(CartaoDeCredito cartaoDeCredito, Usuario usuario){
-        usuario.setIdCartaoDeCredito(cartaoDeCredito); //Relaciona o cartão com o usuário
+    @Autowired
+    Repositorio_Usuario repositorio_Usuario;
 
-        return repositorio_CartaoDeCredito.save(cartaoDeCredito);
+    public CartaoDeCredito criarCartao(CartaoDeCredito cartaoDeCredito, Usuario usuario) {
+        // Verifica se o cartão já existe
+        CartaoDeCredito cartaoExistente = repositorio_CartaoDeCredito.findByDigitosCartaoAndNomeTitularAndDataDeValidadeAndCvv(
+            cartaoDeCredito.getDigitosCartao(), cartaoDeCredito.getNomeTitular(), cartaoDeCredito.getDataDeValidade(), cartaoDeCredito.getCvv());
+
+        if (cartaoExistente != null) {
+            // Se o cartão já existe, associa o cartão existente ao usuário
+            usuario.setIdCartaoDeCredito(cartaoExistente);
+            return cartaoExistente;
+        } else {
+            // Se o cartão não existe, cria um novo cartão e associa ao usuário
+            usuario.setIdCartaoDeCredito(cartaoDeCredito);
+            return repositorio_CartaoDeCredito.save(cartaoDeCredito);
+        }
+    }
+
+    public CartaoDeCredito getUltimoCartao(Usuario usuario) {
+        Usuario usuario1 = repositorio_Usuario.findByEmail(usuario.getEmail());
+        if (usuario1 != null) {
+            return usuario1.getIdCartaoDeCredito();
+        }
+        return null;
     }
 
 }
