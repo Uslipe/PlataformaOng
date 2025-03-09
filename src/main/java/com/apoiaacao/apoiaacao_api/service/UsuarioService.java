@@ -16,7 +16,6 @@ import com.apoiaacao.apoiaacao_api.model.DoacaoFinanceira;
 import com.apoiaacao.apoiaacao_api.model.DoacaoWrapper;
 import com.apoiaacao.apoiaacao_api.model.TipoDeUsuario;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
-import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CartaoDeCredito;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_TipoDeUsuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
 import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
@@ -28,9 +27,6 @@ public class UsuarioService {
 
     @Autowired
     private Repositorio_TipoDeUsuario repositorio_TipoDeUsuario;
-
-    @Autowired
-    private Repositorio_CartaoDeCredito repositorio_CartaoDeCredito;
     
     @Autowired
     private JWTService jwtService;
