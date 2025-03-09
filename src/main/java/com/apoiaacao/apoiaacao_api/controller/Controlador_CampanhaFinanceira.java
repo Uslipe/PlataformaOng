@@ -84,8 +84,8 @@ public class Controlador_CampanhaFinanceira {
     return Repositorio_CampanhaFinanceira.findAll();
   }
 
-  @GetMapping("/listarCampanhasFinanceirasPorONG")
-  public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasPorONG(@RequestBody ONG idOng) {
+  @GetMapping("/listarCampanhasFinanceirasPorONG/{idOng}")
+  public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasPorONG(@PathVariable ONG idOng) {
     return Repositorio_CampanhaFinanceira.findByIdOng(idOng);
   }
   

@@ -85,8 +85,7 @@ public class UsuarioService {
         TipoDeUsuario tipoDeUsuario = repositorio_TipoDeUsuario.findById(idTipoDeUsuario)
             .orElseThrow(() -> new RuntimeException("Tipo de usuário não encontrado")); // Tratamento de erro
 
-        CartaoDeCredito cartaoDeCredito = repositorio_CartaoDeCredito.findById(idCartaoDeCredito)
-            .orElseThrow(() -> new RuntimeException("Tipo de usuário não encontrado")); // Tratamento de erro;
+        CartaoDeCredito cartaoDeCredito = null; // Tratamento de erro;
     
         usuario.setTipoDeUsuario(tipoDeUsuario);
         usuario.setIdCartaoDeCredito(cartaoDeCredito);

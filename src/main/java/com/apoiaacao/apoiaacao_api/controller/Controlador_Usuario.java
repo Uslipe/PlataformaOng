@@ -93,7 +93,7 @@ public class Controlador_Usuario {
         int idTipoUsuario = usuario.getTipoDeUsuario().getIdTipoDeUsuario();
         System.out.println(idTipoUsuario);
 
-        int idCartaoDeCredito = usuario.getIdCartaoDeCredito().getIdCartaoDeCredito();
+        int idCartaoDeCredito = 0;
 
         Usuario user = usuarioService.criarUsuario(idTipoUsuario, idCartaoDeCredito, usuario);
         try {
