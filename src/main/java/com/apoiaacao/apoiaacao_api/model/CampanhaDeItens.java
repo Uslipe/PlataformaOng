@@ -161,7 +161,7 @@ public class CampanhaDeItens{
         this.encerrada = encerrada;
     }
 
-    public int isItensACaminho() {
+    public int itensACaminho() {
         return itensACaminho;
     }
 

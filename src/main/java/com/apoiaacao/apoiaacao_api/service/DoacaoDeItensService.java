@@ -37,7 +37,7 @@ public class DoacaoDeItensService {
         doacao.setCampanhaDeItens(campanha);
         doacao.setUsuario(usuario);
         doacao.setDataDoacao(java.time.LocalDate.now());
-        campanha.setQuantidadeDeItens(doacao.getQuantidadeDeItens() + campanha.getQuantidadeDeItens());
+        campanha.setItensACaminho(doacao.getQuantidadeDeItens() + campanha.getItensACaminho());
 
         // Salvar a campanha financeira
         return repositorio_DoacaoDeItens.save(doacao);
