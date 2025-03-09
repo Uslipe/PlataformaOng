@@ -56,9 +56,9 @@ public class Controlador_CampanhaFinanceira {
     
   }
 
-  @DeleteMapping("/deletarCampanhaFinanceira")
-  public void deletarCampanhaFinanceira(@RequestBody CampanhaFinanceira campanhaFinanceira) {
-    Repositorio_CampanhaFinanceira.delete(campanhaFinanceira);
+  @DeleteMapping("/deletarCampanhaFinanceira/{id}")
+  public void deletarCampanhaFinanceira(@PathVariable int id) {
+    Repositorio_CampanhaFinanceira.deleteById(id);
   }
   
  @PutMapping("/editarCampanhaFinanceira/{id}")
@@ -84,8 +84,8 @@ public class Controlador_CampanhaFinanceira {
     return Repositorio_CampanhaFinanceira.findAll();
   }
 
-  @GetMapping("/listarCampanhasFinanceirasPorONG")
-  public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasPorONG(@RequestBody ONG idOng) {
+  @GetMapping("/listarCampanhasFinanceirasPorONG/{idOng}")
+  public Iterable<CampanhaFinanceira> listarCampanhasFinanceirasPorONG(@PathVariable ONG idOng) {
     return Repositorio_CampanhaFinanceira.findByIdOng(idOng);
   }
   
