@@ -76,6 +76,7 @@ public class Controlador_CampanhaDeItens {
       campanha.setEndereco(campanhaAtualizada.getEndereco());
       campanha.setQuantidadeDeItens(campanhaAtualizada.getQuantidadeDeItens());
       campanha.setQuantidadeDeItensEntregues(campanhaAtualizada.getQuantidadeDeItensEntregues());
+      campanha.setItensACaminho(campanhaAtualizada.getItensACaminho());
 
       Repositorio_CampanhaDeItens.save(campanha);
       return ResponseEntity.ok(campanha);
