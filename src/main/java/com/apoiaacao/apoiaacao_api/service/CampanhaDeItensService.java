@@ -63,7 +63,7 @@ public class CampanhaDeItensService {
         if (cItens.isPresent()) {
             CampanhaDeItens campanha = cItens.get();
             
-            if (Boolean.TRUE.equals(campanha.getEncerrada())) {
+            if (Boolean.TRUE.equals(campanha.getEncerrada()) || campanha.getQuantidadeDeItensEntregues() == 0) {
                 //Deleta todas as doações relacionadas a essa campanha
                 repositorio_DoacaoDeItens.deleteByCampanhaDeItens(campanha);
     

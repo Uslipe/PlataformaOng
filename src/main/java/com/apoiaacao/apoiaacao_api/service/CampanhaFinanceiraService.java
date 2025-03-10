@@ -61,7 +61,7 @@ public class CampanhaFinanceiraService {
         if (cFinanceira.isPresent()) {
             CampanhaFinanceira campanha = cFinanceira.get();
             
-            if (Boolean.TRUE.equals(campanha.getEncerrada())) {
+            if (Boolean.TRUE.equals(campanha.getEncerrada()) || campanha.getValorArrecadado() == 0) {
                 //Deleta todas as doações relacionadas a essa campanha
                 repositorio_DoacaoFinanceira.deleteByCampanhaFinanceira(campanha);
     
