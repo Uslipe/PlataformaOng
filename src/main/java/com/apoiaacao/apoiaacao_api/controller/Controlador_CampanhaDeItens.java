@@ -74,8 +74,9 @@ public class Controlador_CampanhaDeItens {
       campanha.setDescricao(campanhaAtualizada.getDescricao());
       campanha.setDataFim(campanhaAtualizada.getDataFim());
       campanha.setEndereco(campanhaAtualizada.getEndereco());
-      campanha.setCategoriaItens(campanhaAtualizada.getCategoriaItens());
-      
+      campanha.setQuantidadeDeItens(campanhaAtualizada.getQuantidadeDeItens());
+      campanha.setQuantidadeDeItensEntregues(campanhaAtualizada.getQuantidadeDeItensEntregues());
+
       Repositorio_CampanhaDeItens.save(campanha);
       return ResponseEntity.ok(campanha);
     } else {
