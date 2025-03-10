@@ -161,9 +161,6 @@ public class CampanhaDeItens{
         this.encerrada = encerrada;
     }
 
-    public int itensACaminho() {
-        return itensACaminho;
-    }
 
     public void setItensACaminho(int itensACaminho) {
         this.itensACaminho = itensACaminho;
