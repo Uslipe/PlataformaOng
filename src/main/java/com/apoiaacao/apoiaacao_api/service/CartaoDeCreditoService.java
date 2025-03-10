@@ -30,10 +30,6 @@ public class CartaoDeCreditoService {
             // Se o cartão não existe, cria um novo cartão e associa ao usuário
             usuario.setIdCartaoDeCredito(cartaoDeCredito);
 
-            //Criptografar todos os dados do cartão
-            String hashNumeroCartao = BCryptEncoder.encoder(cartaoDeCredito.getDigitosCartao());
-            cartaoDeCredito.setDigitosCartao(hashNumeroCartao);
-
             String hashCvv = BCryptEncoder.encoder(cartaoDeCredito.getCvv());
             cartaoDeCredito.setCvv(hashCvv);
 
