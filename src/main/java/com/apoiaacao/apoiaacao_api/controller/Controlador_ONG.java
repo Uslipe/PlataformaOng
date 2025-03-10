@@ -105,4 +105,10 @@ public class Controlador_ONG {
     }
   }
 
+  @GetMapping("/ongValidada/{id}")
+  public ResponseEntity<Boolean> isOngValidada(@PathVariable int id) {
+    boolean validada = ongService.isOngValidada(id);
+    return ResponseEntity.ok(validada);
+  }
+
 }
