@@ -7,6 +7,7 @@ import com.apoiaacao.apoiaacao_api.model.CartaoDeCredito;
 import com.apoiaacao.apoiaacao_api.model.Usuario;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_CartaoDeCredito;
 import com.apoiaacao.apoiaacao_api.repositories.Repositorio_Usuario;
+import com.apoiaacao.apoiaacao_api.util.BCryptEncoder;
 
 @Service
 public class CartaoDeCreditoService {
@@ -28,6 +29,14 @@ public class CartaoDeCreditoService {
         } else {
             // Se o cartão não existe, cria um novo cartão e associa ao usuário
             usuario.setIdCartaoDeCredito(cartaoDeCredito);
+
+            //Criptografar todos os dados do cartão
+            String hashNumeroCartao = BCryptEncoder.encoder(cartaoDeCredito.getDigitosCartao());
+            cartaoDeCredito.setDigitosCartao(hashNumeroCartao);
+
+            String hashCvv = BCryptEncoder.encoder(cartaoDeCredito.getCvv());
+            cartaoDeCredito.setCvv(hashCvv);
+
             return repositorio_CartaoDeCredito.save(cartaoDeCredito);
         }
     }
