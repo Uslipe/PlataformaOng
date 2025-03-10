@@ -19,6 +19,8 @@ public interface Repositorio_DoacaoDeItens extends JpaRepository<DoacaoDeItens, 
 
   List<DoacaoDeItens> findByIdUsuario(Usuario idUsuario);
 
+  List<DoacaoDeItens> findByCampanhaDeItens(CampanhaDeItens campanhaDeItens);
+
   //Método para deletar doações de uma determinada campanha
     @Transactional
     @Modifying
